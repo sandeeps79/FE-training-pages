@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AxisPharma — Corporate Home</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cd:#0B1F3A;--cm:#132D55;--cb:#1E5FAD;--cc:#00B4D8;
+  --clc:#E0F7FA;--cs:#8EA8C3;--w:#fff;
+  --g50:#F8F9FC;--g100:#EEF0F6;--g200:#D8DFF0;--g600:#4A5A7A;--g900:#0D1B2A;
+  --gold:#D4A017;--green:#15803d;--red:#b91c1c;
+  --sh:0 4px 24px rgba(11,31,58,.15);--sha:0 12px 40px rgba(11,31,58,.25);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;font-size:10.5pt;color:var(--g900);background:#fff;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+img{max-width:100%;}
+
+/* Drupal labels */
+[data-drupal]{position:relative;}
+[data-drupal]::before{content:attr(data-drupal);position:absolute;top:0;left:0;background:#e94560;color:#fff;font-size:8px;font-family:monospace;font-weight:700;padding:2px 7px;border-radius:0 0 5px 0;z-index:99;pointer-events:none;white-space:nowrap;}
+
+/* ── UTILITY BAR ── */
+.utility-bar{background:var(--cd);padding:9px 0;font-size:12px;}
+.utility-inner{display:flex;justify-content:space-between;align-items:center;}
+.stock-ticker{display:flex;align-items:center;gap:10px;color:var(--cs);}
+.stock-price{color:#fff;font-weight:700;font-family:'Montserrat',sans-serif;}
+.stock-change{color:#4ade80;font-weight:600;font-size:11px;}
+.exchange-tag{background:rgba(0,180,216,.15);color:var(--cc);font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;letter-spacing:.5px;}
+.utility-links{display:flex;gap:20px;align-items:center;}
+.utility-links a{color:var(--cs);font-size:11.5px;transition:color .2s;}
+.utility-links a:hover{color:var(--cc);}
+.utility-links .sep{color:#2a3f5f;}
+.utility-links .lang{color:var(--cc);font-weight:600;}
+
+/* ── HEADER ── */
+.site-header{background:#fff;border-bottom:1px solid var(--g200);position:sticky;top:0;z-index:1000;box-shadow:0 2px 12px rgba(11,31,58,.08);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:42px;height:42px;background:linear-gradient(135deg,var(--cb),var(--cc));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-text strong{display:block;font-family:'Montserrat',sans-serif;font-size:17pt;font-weight:900;color:var(--cd);letter-spacing:-1px;}
+.logo-text span{font-size:8.5pt;color:var(--cc);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.main-nav{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
+.nav-item{position:relative;}
+.main-nav a{display:flex;align-items:center;gap:4px;padding:8px 13px;font-size:13px;font-weight:500;color:var(--g600);border-radius:6px;transition:all .2s;white-space:nowrap;}
+.main-nav a:hover,.main-nav a.active{color:var(--cb);background:var(--g50);}
+.has-dd>a::after{content:'▾';font-size:9px;opacity:.5;}
+.dropdown-menu{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--g200);border-top:3px solid var(--cc);border-radius:8px;min-width:200px;padding:8px;box-shadow:var(--sh);display:none;}
+.nav-item:hover .dropdown-menu{display:block;}
+.dropdown-menu a{display:block;padding:8px 12px;font-size:12.5px;color:var(--g600);border-radius:5px;}
+.dropdown-menu a:hover{background:var(--clc);color:var(--cb);}
+.mega-menu{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--g200);border-top:3px solid var(--cc);border-radius:10px;min-width:520px;padding:18px;box-shadow:var(--sh);display:none;}
+.nav-item:hover .mega-menu{display:block;}
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.mega-item{display:flex;gap:10px;padding:9px 10px;border-radius:7px;transition:background .2s;cursor:pointer;}
+.mega-item:hover{background:var(--g50);}
+.mega-item-icon{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.mega-item-text strong{display:block;font-size:12px;font-weight:600;color:var(--g900);}
+.mega-item-text span{font-size:11px;color:var(--cs);}
+.header-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+.btn-corp{background:var(--cb);color:#fff;}
+.btn-corp:hover{background:var(--cd);transform:translateY(-1px);}
+.btn-outline-corp{border:1.5px solid var(--g200);color:var(--g600);background:#fff;}
+.btn-outline-corp:hover{border-color:var(--cb);color:var(--cb);}
+.btn-lg{padding:13px 28px;font-size:14px;border-radius:7px;}
+.btn-cyan{background:var(--cc);color:var(--cd);}
+.btn-cyan:hover{background:#0095B8;}
+.search-btn{width:36px;height:36px;border-radius:6px;border:1.5px solid var(--g200);display:flex;align-items:center;justify-content:center;color:var(--cs);font-size:15px;cursor:pointer;transition:all .2s;}
+.search-btn:hover{border-color:var(--cc);color:var(--cc);}
+
+/* ── SECTIONS ── */
+.section{padding:80px 0;}
+.section-alt{background:var(--g50);}
+.section-dark{background:var(--cd);}
+.section-mid{background:var(--cm);}
+.eyebrow{font-size:11px;font-weight:700;color:var(--cc);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--cc);}
+.section-title{font-family:'Montserrat',sans-serif;font-size:34px;font-weight:900;color:var(--cd);line-height:1.15;margin-bottom:14px;}
+.section-title em{font-style:normal;color:var(--cb);}
+.section-title.white{color:#fff;}
+.section-desc{font-size:15px;color:var(--g600);max-width:560px;line-height:1.8;margin-bottom:28px;}
+.section-desc.center{margin:0 auto 28px;text-align:center;}
+.section-desc.white{color:var(--cs);}
+.section-header-center{text-align:center;margin-bottom:48px;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--cd) 0%,var(--cm) 50%,#0D2E5C 100%);padding:80px 0 70px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,180,216,.1) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--cc),transparent);}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.3);color:var(--cc);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:3px;margin-bottom:20px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;color:#fff;line-height:1.15;margin-bottom:18px;}
+.hero h1 em{font-style:normal;color:var(--cc);}
+.hero-desc{color:var(--cs);font-size:15.5px;line-height:1.8;margin-bottom:30px;max-width:480px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;}
+.trust-pills{display:flex;gap:12px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);}
+.trust-pill{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--cs);}
+.trust-pill .chk{color:var(--cc);font-size:14px;}
+
+/* Hero Financial Card */
+.fin-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);border-radius:14px;padding:24px;border-top:2px solid var(--cc);}
+.fin-card-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.fin-card-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--cb),var(--cc));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.fin-card-title{color:#fff;font-size:14px;font-weight:700;}
+.fin-card-sub{color:var(--cs);font-size:12px;}
+.fin-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fin-kpi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px;}
+.fin-kpi .val{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:3px;}
+.fin-kpi .lbl{font-size:11px;color:var(--cs);}
+.fin-kpi .trend{font-size:11px;color:#4ade80;font-weight:600;}
+.fin-kpi .trend.down{color:#f87171;}
+
+/* ── KPI BAND ── */
+.kpi-band{background:#fff;padding:32px 0;border-bottom:1px solid var(--g200);}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;}
+.kpi-tile{padding:20px 24px;border-left:3px solid var(--cc);position:relative;}
+.kpi-tile+.kpi-tile{border-top:none;}
+.kpi-tile::after{content:'';position:absolute;right:0;top:15%;bottom:15%;width:1px;background:var(--g200);}
+.kpi-tile:last-child::after{display:none;}
+.kpi-tile .num{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:900;color:var(--cd);line-height:1.1;margin-bottom:4px;}
+.kpi-tile .lbl{font-size:12px;font-weight:700;color:var(--g600);margin-bottom:2px;}
+.kpi-tile .sub{font-size:11px;color:var(--cs);}
+
+/* ── OVERVIEW ── */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.overview-img{height:440px;background:linear-gradient(135deg,var(--cm) 0%,var(--cd) 100%);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:90px;position:relative;overflow:hidden;}
+.overview-img::before{content:'';position:absolute;bottom:-2px;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cc),var(--cb),var(--cc));}
+.value-pills{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 20px;}
+.value-pill{background:var(--clc);color:var(--cb);font-size:12px;font-weight:700;padding:5px 14px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;}
+.highlight-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:26px;}
+.highlight-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--g600);}
+.highlight-list li::before{content:'→';color:var(--cc);font-weight:700;flex-shrink:0;}
+
+/* ── GLOBAL PRESENCE ── */
+.region-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:44px;}
+.region-card{background:#fff;border:1.5px solid var(--g200);border-radius:10px;padding:20px;transition:all .3s;}
+.region-card:hover{border-color:var(--cc);transform:translateY(-3px);box-shadow:var(--sh);}
+.region-icon{font-size:28px;margin-bottom:12px;}
+.region-name{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:var(--cd);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.region-stat{font-size:13px;font-weight:700;color:var(--cb);margin-bottom:8px;}
+.region-products{display:flex;flex-direction:column;gap:3px;}
+.region-products span{font-size:11px;color:var(--cs);}
+
+/* ── THERAPEUTICS (dark) ── */
+.therapy-section{background:var(--cd);padding:80px 0;}
+.therapy-section .section-title{color:#fff;}
+.therapy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;}
+.therapy-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:24px;transition:all .3s;cursor:pointer;}
+.therapy-card:hover{background:rgba(255,255,255,.1);border-color:rgba(0,180,216,.4);transform:translateY(-3px);}
+.therapy-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+.t-icon{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.t-count{font-size:11px;font-weight:700;color:var(--cc);text-align:right;}
+.t-count strong{display:block;font-size:16px;font-family:'Montserrat',sans-serif;}
+.therapy-card h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;}
+.therapy-card p{font-size:12.5px;color:var(--cs);line-height:1.6;margin-bottom:12px;}
+.t-link{font-size:12px;font-weight:600;color:var(--cc);display:flex;align-items:center;gap:5px;}
+
+/* ── FINANCIALS ── */
+.fin-highlights-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px;}
+.fin-highlight-card{background:#fff;border:1.5px solid var(--g200);border-radius:10px;padding:24px;border-top:3px solid var(--cc);transition:all .3s;}
+.fin-highlight-card:hover{box-shadow:var(--sh);transform:translateY(-2px);}
+.fh-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+.fh-value{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:var(--cd);}
+.fh-trend{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;}
+.fh-trend.up{color:var(--green);}
+.fh-trend.down{color:var(--red);}
+.fh-label{font-size:13px;font-weight:700;color:var(--g600);margin-bottom:5px;}
+.fh-desc{font-size:12px;color:var(--cs);margin-bottom:14px;}
+.fh-bar{height:5px;background:var(--g100);border-radius:3px;overflow:hidden;}
+.fh-fill{height:100%;background:linear-gradient(90deg,var(--cb),var(--cc));border-radius:3px;}
+.fin-report-link{text-align:center;margin-top:24px;font-size:14px;font-weight:600;color:var(--cb);display:flex;align-items:center;justify-content:center;gap:6px;}
+
+/* ── LEADERSHIP ── */
+.leadership-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+.leader-card{background:#fff;border:1.5px solid var(--g200);border-radius:10px;padding:24px;text-align:center;transition:all .3s;}
+.leader-card:hover{border-color:var(--cc);box-shadow:var(--sh);}
+.leader-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;font-family:'Montserrat',sans-serif;}
+.leader-name{font-size:15px;font-weight:700;color:var(--cd);margin-bottom:4px;}
+.leader-title{font-size:12px;color:var(--cb);font-weight:600;margin-bottom:6px;}
+.leader-desc{font-size:12px;color:var(--cs);line-height:1.5;margin-bottom:12px;}
+.leader-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--cb);font-weight:600;background:var(--g50);padding:4px 10px;border-radius:4px;}
+
+/* ── ESG ── */
+.esg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+.esg-card{border-radius:12px;padding:28px;border:1.5px solid var(--g200);}
+.esg-icon{width:58px;height:58px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;}
+.esg-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.esg-card h3{font-size:16px;font-weight:800;color:var(--cd);margin-bottom:6px;font-family:'Montserrat',sans-serif;}
+.esg-metric{font-size:22px;font-weight:900;color:var(--cb);font-family:'Montserrat',sans-serif;margin-bottom:4px;}
+.esg-target{font-size:11px;color:var(--cs);margin-bottom:12px;}
+.esg-card p{font-size:13px;color:var(--g600);line-height:1.6;margin-bottom:14px;}
+.esg-progress{height:6px;background:var(--g200);border-radius:3px;overflow:hidden;}
+.esg-fill{height:100%;border-radius:3px;}
+
+/* ── INVESTOR CTA ── */
+.investor-cta{background:var(--cd);padding:80px 0;text-align:center;position:relative;border-top:3px solid var(--cc);}
+.investor-cta::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 50%,rgba(0,180,216,.07) 0%,transparent 65%);pointer-events:none;}
+.investor-cta .eyebrow{justify-content:center;color:var(--cc);}
+.investor-cta .eyebrow::before{background:var(--cc);}
+.investor-cta h2{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:14px;position:relative;}
+.investor-cta p{color:var(--cs);font-size:16px;max-width:520px;margin:0 auto 32px;line-height:1.75;position:relative;}
+.cta-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;}
+
+/* ── NEWS ── */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+.news-card{background:#fff;border:1.5px solid var(--g200);border-radius:10px;overflow:hidden;transition:all .3s;}
+.news-card:hover{border-color:var(--cc);box-shadow:var(--sh);transform:translateY(-2px);}
+.news-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
+.news-cat{position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.nc-press{background:#ede9fe;color:#6d28d9;}
+.nc-financial{background:#dcfce7;color:#15803d;}
+.nc-corporate{background:var(--clc);color:var(--cb);}
+.news-body{padding:18px;}
+.news-date{font-size:11px;color:var(--cs);margin-bottom:8px;}
+.news-card h3{font-size:14px;font-weight:700;color:var(--cd);line-height:1.4;margin-bottom:8px;}
+.news-card p{font-size:12.5px;color:var(--g600);line-height:1.65;margin-bottom:12px;}
+.news-read{font-size:12px;font-weight:600;color:var(--cb);display:flex;align-items:center;gap:5px;border-top:1px solid var(--g100);padding-top:12px;}
+
+/* ── CERTS BAND ── */
+.certs-band{background:var(--g50);padding:44px 0;border-top:1px solid var(--g200);border-bottom:1px solid var(--g200);}
+.certs-label{text-align:center;font-size:11px;font-weight:700;color:var(--cs);letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;}
+.certs-row{display:flex;justify-content:center;align-items:center;gap:32px;flex-wrap:wrap;}
+.cert-item{display:flex;align-items:center;gap:7px;color:var(--cs);font-size:13px;font-weight:700;opacity:.65;transition:opacity .2s;}
+.cert-item:hover{opacity:1;}
+.cert-item span{width:28px;height:28px;background:var(--g200);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--cd);padding:64px 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.footer-brand .logo{margin-bottom:14px;}
+.footer-brand p{color:var(--cs);font-size:13px;line-height:1.75;max-width:260px;margin-bottom:16px;}
+.footer-socials{display:flex;gap:8px;margin-bottom:14px;}
+.footer-social{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--cs);font-size:13px;transition:all .2s;}
+.footer-social:hover{background:var(--cc);color:var(--cd);border-color:var(--cc);}
+.footer-stock{background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.2);border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.footer-stock .sym{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:900;color:#fff;}
+.footer-stock .price{color:var(--cc);font-weight:700;font-size:14px;}
+.footer-stock .chg{color:#4ade80;font-size:11px;}
+.footer-col h5{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08);text-transform:uppercase;letter-spacing:.5px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul li a{font-size:13px;color:var(--cs);transition:color .2s;}
+.footer-col ul li a:hover{color:var(--cc);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-bottom p{font-size:12px;color:var(--cs);}
+.footer-bottom-links{display:flex;gap:18px;}
+.footer-bottom-links a{font-size:12px;color:var(--cs);transition:color .2s;}
+.footer-bottom-links a:hover{color:var(--cc);}
+.footer-legal-bar{background:rgba(0,0,0,.25);padding:14px 0;text-align:center;}
+.footer-legal-bar p{font-size:10.5px;color:rgba(255,255,255,.2);max-width:880px;margin:0 auto;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utility-bar" data-drupal="Block: corp_utility_bar | Region: utility_bar">
+  <div class="container">
+    <div class="utility-inner">
+      <div class="stock-ticker">
+        <span class="exchange-tag">NYSE</span>
+        <span class="stock-price">AXP</span>
+        <span style="color:var(--cs);">$124.50</span>
+        <span class="stock-change">▲ 2.3% (+$2.80)</span>
+        <span style="color:#2a3f5f;">|</span>
+        <span style="color:var(--cs);font-size:11px;">Market Cap: $42.1B</span>
+      </div>
+      <div class="utility-links">
+        <a href="#">Investor Relations</a><span class="sep">|</span>
+        <a href="#">Careers</a><span class="sep">|</span>
+        <a href="#">Media</a><span class="sep">|</span>
+        <a href="#" class="lang">🌐 EN</a>
+        <span class="sep">|</span>
+        <a href="#">🔍</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" data-drupal="Block: main_navigation | Region: header | Menu: main_menu">
+  <div class="container">
+    <div class="header-inner">
+      <a href="pharma-theme-3-axispharma.html" class="logo">
+        <div class="logo-mark">🏛</div>
+        <div class="logo-text"><strong>AxisPharma</strong><span>Science. Scale. Impact.</span></div>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-item"><a href="pharma-theme-3-axispharma.html" class="active">Home</a></div>
+        <div class="nav-item has-dd">
+          <a href="#">About Us</a>
+          <div class="dropdown-menu">
+            <a href="#">Our Story</a><a href="#">Leadership</a>
+            <a href="#">Corporate Governance</a><a href="#">Sustainability</a><a href="#">Awards</a>
+          </div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="#">Therapeutics</a>
+          <div class="mega-menu">
+            <div class="mega-grid">
+              <div class="mega-item"><div class="mega-item-icon" style="background:#fff0f0;">🎗️</div><div class="mega-item-text"><strong>Oncology</strong><span>Targeted &amp; immuno-oncology</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#fff0e0;">❤️</div><div class="mega-item-text"><strong>Cardiovascular</strong><span>Hypertension, heart failure</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#f0f0ff;">🧠</div><div class="mega-item-text"><strong>Neurology</strong><span>CNS &amp; psychiatric disorders</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:var(--clc);">🧬</div><div class="mega-item-text"><strong>Rare &amp; Genetic</strong><span>Enzyme replacement &amp; gene therapy</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#f0fff0;">🛡️</div><div class="mega-item-text"><strong>Immunology</strong><span>Biologics for autoimmune</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#e0f0ff;">🫁</div><div class="mega-item-text"><strong>Respiratory</strong><span>COPD, asthma, fibrosis</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item"><a href="pharma-theme-3-axispharma-p2.html">Products &amp; Mfg</a></div>
+        <div class="nav-item has-dd">
+          <a href="#">Pipeline</a>
+          <div class="dropdown-menu"><a href="#">R&amp;D Overview</a><a href="#">Pipeline Table</a><a href="#">Publications</a></div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="#">Investors</a>
+          <div class="dropdown-menu"><a href="#">Financial Results</a><a href="#">Annual Report</a><a href="#">SEC Filings</a><a href="#">Events &amp; Calendar</a></div>
+        </div>
+        <div class="nav-item"><a href="#">Newsroom</a></div>
+        <div class="nav-item"><a href="#">Careers</a></div>
+      </nav>
+      <div class="header-actions">
+        <button class="search-btn">🔍</button>
+        <a href="#" class="btn btn-corp">Investor Portal</a>
+        <a href="#" class="btn btn-outline-corp">Contact</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" data-drupal="Paragraph: corp_hero_banner | CT: landing_page">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">🏛 Advancing Global Healthcare Since 1924</div>
+        <h1>Where <em>Scientific Excellence</em><br>Meets Corporate Leadership</h1>
+        <p class="hero-desc">AxisPharma is a Fortune 500 pharmaceutical corporation delivering breakthrough medicines across 6 therapeutic areas, serving 80+ countries through 12 GMP-certified manufacturing facilities.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-corp btn-lg">Investor Relations →</a>
+          <a href="pharma-theme-3-axispharma-p2.html" class="btn btn-outline-corp btn-lg" style="border-color:rgba(255,255,255,.3);color:#fff;">Explore Pipeline →</a>
+        </div>
+        <div class="trust-pills">
+          <div class="trust-pill"><span class="chk">●</span> NYSE: AXP</div>
+          <div class="trust-pill"><span class="chk">●</span> S&amp;P 500 Component</div>
+          <div class="trust-pill"><span class="chk">●</span> Fortune 500 — Rank #142</div>
+        </div>
+      </div>
+      <div>
+        <div class="fin-card">
+          <div class="fin-card-header">
+            <div class="fin-card-icon">📊</div>
+            <div><div class="fin-card-title">FY 2025 Financial Highlights</div><div class="fin-card-sub">field_financial_card_heading</div></div>
+          </div>
+          <div class="fin-kpi-grid">
+            <div class="fin-kpi"><div class="val">$8.2B</div><div class="lbl">Total Revenue</div><div class="trend">▲ +12% YoY</div></div>
+            <div class="fin-kpi"><div class="val">$1.9B</div><div class="lbl">Net Income</div><div class="trend">▲ +8.4% YoY</div></div>
+            <div class="fin-kpi"><div class="val">$2.1B</div><div class="lbl">R&amp;D Investment</div><div class="trend">▲ 25.6% of Revenue</div></div>
+            <div class="fin-kpi"><div class="val">$42B</div><div class="lbl">Market Capitalization</div><div class="trend">▲ All-time high 2025</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI BAND -->
+<div class="kpi-band" data-drupal="Paragraph: kpi_band | Sub-para: kpi_item × 5">
+  <div class="container">
+    <div class="kpi-grid">
+      <div class="kpi-tile"><div class="num">50,000+</div><div class="lbl">Global Employees</div><div class="sub">field_kpi_sublabel: Across 80+ countries</div></div>
+      <div class="kpi-tile"><div class="num">80+</div><div class="lbl">Countries Served</div><div class="sub">Direct operations in 35</div></div>
+      <div class="kpi-tile"><div class="num">200+</div><div class="lbl">Marketed Products</div><div class="sub">Across 6 therapy areas</div></div>
+      <div class="kpi-tile"><div class="num">24</div><div class="lbl">Pipeline Candidates</div><div class="sub">8 in Phase III trials</div></div>
+      <div class="kpi-tile"><div class="num">AAA</div><div class="lbl">Credit Rating</div><div class="sub">S&amp;P / Moody's / Fitch</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CORPORATE OVERVIEW -->
+<section class="section" data-drupal="Paragraph: corp_overview_split | CT: landing_page">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-img">🌐</div>
+      <div>
+        <div class="eyebrow">field_eyebrow: Who We Are</div>
+        <h2 class="section-title">A Century of <em>Scientific Innovation</em>,<br>A Future of Global Impact</h2>
+        <p class="section-desc">Founded in 1924 as a small laboratory in New York, AxisPharma has grown into one of the world's leading pharmaceutical corporations — driven by the belief that science, executed with integrity and scaled with discipline, can transform patient lives globally.</p>
+        <div class="value-pills">
+          <span class="value-pill">Innovation</span>
+          <span class="value-pill">Integrity</span>
+          <span class="value-pill">Impact</span>
+        </div>
+        <ul class="highlight-list">
+          <li>Founded 1924, Headquartered New York, NY</li>
+          <li>18 products on WHO Essential Medicines List</li>
+          <li>12 WHO-GMP &amp; FDA-cleared manufacturing facilities</li>
+          <li>Listed on NYSE since 1962 — consecutive dividend growth for 28 years</li>
+          <li>50,000 employees across R&amp;D, manufacturing, commercial, &amp; corporate functions</li>
+        </ul>
+        <a href="#" class="btn btn-corp btn-lg">Our Full Story →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL PRESENCE -->
+<section class="section section-alt" data-drupal="Paragraph: global_presence_block | Sub-para: region_item × 5">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">field_eyebrow: Global Footprint</div>
+      <h2 class="section-title" style="text-align:center;">Presence in Every <em>Major Market</em></h2>
+      <p class="section-desc center">From North America to Asia Pacific, AxisPharma maintains direct operations, partnerships, and manufacturing infrastructure across 5 global regions.</p>
+    </div>
+    <div class="region-grid">
+      <div class="region-card">
+        <div class="region-icon">🌎</div>
+        <div class="region-name">North America</div>
+        <div class="region-stat">$3.1B Revenue · 3 Countries</div>
+        <div class="region-products"><span>● USA Headquarters (NYSE listed)</span><span>● FDA-cleared manufacturing</span><span>● 22,000 employees</span></div>
+      </div>
+      <div class="region-card">
+        <div class="region-icon">🌍</div>
+        <div class="region-name">Europe</div>
+        <div class="region-stat">$2.4B Revenue · 28 Countries</div>
+        <div class="region-products"><span>● EMA authorized portfolio</span><span>● EU-GMP facilities: 4</span><span>● 14,000 employees</span></div>
+      </div>
+      <div class="region-card">
+        <div class="region-icon">🌏</div>
+        <div class="region-name">Asia Pacific</div>
+        <div class="region-stat">$1.8B Revenue · 22 Countries</div>
+        <div class="region-products"><span>● India API manufacturing hub</span><span>● CDSCO &amp; PMDA approved</span><span>● 10,000 employees</span></div>
+      </div>
+      <div class="region-card">
+        <div class="region-icon">🌎</div>
+        <div class="region-name">Latin America</div>
+        <div class="region-stat">$0.6B Revenue · 18 Countries</div>
+        <div class="region-products"><span>● Brazil regional HQ</span><span>● ANVISA approved</span><span>● 3,000 employees</span></div>
+      </div>
+      <div class="region-card">
+        <div class="region-icon">🌍</div>
+        <div class="region-name">Middle East &amp; Africa</div>
+        <div class="region-stat">$0.3B Revenue · 30 Countries</div>
+        <div class="region-products"><span>● Dubai regional office</span><span>● Access programs: 25 nations</span><span>● 1,000 employees</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THERAPEUTICS (dark) -->
+<section class="therapy-section" data-drupal="View: therapeutic_areas / corporate_grid | Taxonomy: therapeutic_area">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;color:var(--cc);">View: therapeutic_areas / corporate_grid</div>
+      <h2 class="section-title white" style="text-align:center;">Our Therapeutic <em style="color:var(--cc);">Focus Areas</em></h2>
+      <p class="section-desc center white">Six areas where our science has demonstrated the deepest expertise and the greatest patient impact.</p>
+    </div>
+    <div class="therapy-grid">
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(255,100,100,.15);">🎗️</div><div class="t-count">Products<strong>42</strong></div></div>
+        <h3>Oncology</h3>
+        <p>Targeted therapies and immuno-oncology agents across solid tumors and hematologic malignancies.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(255,140,0,.15);">❤️</div><div class="t-count">Products<strong>38</strong></div></div>
+        <h3>Cardiovascular</h3>
+        <p>Hypertension, heart failure, arrhythmia, and lipid management innovations with 30-year evidence.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(147,100,255,.15);">🧠</div><div class="t-count">Products<strong>28</strong></div></div>
+        <h3>Neurology &amp; CNS</h3>
+        <p>Depression, epilepsy, Alzheimer's, and movement disorders — 15 pipeline candidates.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(0,180,216,.15);">🧬</div><div class="t-count">Products<strong>18</strong></div></div>
+        <h3>Rare &amp; Genetic</h3>
+        <p>Enzyme replacement therapies and gene therapy platforms for rare metabolic conditions.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(100,200,100,.15);">🛡️</div><div class="t-count">Products<strong>24</strong></div></div>
+        <h3>Immunology</h3>
+        <p>Biologics and small molecules for RA, psoriasis, Crohn's, and ulcerative colitis.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+      <div class="therapy-card">
+        <div class="therapy-card-top"><div class="t-icon" style="background:rgba(100,150,255,.15);">🫁</div><div class="t-count">Products<strong>20</strong></div></div>
+        <h3>Respiratory</h3>
+        <p>Advanced DPI/MDI inhalers and systemic therapies for COPD, asthma, and pulmonary fibrosis.</p>
+        <a href="#" class="t-link">Explore →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIAL HIGHLIGHTS -->
+<section class="section" data-drupal="Paragraph: financial_highlights_block | Sub-para: fin_metric_item × 4">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">field_eyebrow: Investor Highlights</div>
+      <h2 class="section-title" style="text-align:center;">Financial <em>Performance</em></h2>
+      <p class="section-desc center">Consistent growth, disciplined capital allocation, and sustained R&amp;D investment — delivering long-term shareholder value.</p>
+    </div>
+    <div class="fin-highlights-grid">
+      <div class="fin-highlight-card">
+        <div class="fh-top"><div class="fh-value">+12%</div><div class="fh-trend up">▲ YoY Revenue</div></div>
+        <div class="fh-label">Revenue Growth</div>
+        <div class="fh-desc">3-year CAGR of 9.8% — driven by oncology and rare disease portfolio expansion</div>
+        <div class="fh-bar"><div class="fh-fill" style="width:82%;"></div></div>
+      </div>
+      <div class="fin-highlight-card">
+        <div class="fh-top"><div class="fh-value">2.8%</div><div class="fh-trend up">▲ Consistent growth</div></div>
+        <div class="fh-label">Dividend Yield</div>
+        <div class="fh-desc">28 consecutive years of dividend growth — S&amp;P Dividend Aristocrat designation</div>
+        <div class="fh-bar"><div class="fh-fill" style="width:68%;background:linear-gradient(90deg,var(--gold),#f6d365);"></div></div>
+      </div>
+      <div class="fin-highlight-card">
+        <div class="fh-top"><div class="fh-value">25.6%</div><div class="fh-trend up">▲ Above industry avg</div></div>
+        <div class="fh-label">R&amp;D as % of Revenue</div>
+        <div class="fh-desc">$2.1B invested in 2025 — top-quartile among global pharmaceutical peers</div>
+        <div class="fh-bar"><div class="fh-fill" style="width:76%;background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div></div>
+      </div>
+      <div class="fin-highlight-card">
+        <div class="fh-top"><div class="fh-value">$42B</div><div class="fh-trend up">▲ All-time high</div></div>
+        <div class="fh-label">Market Capitalization</div>
+        <div class="fh-desc">NYSE: AXP — 10-year total shareholder return of 312%</div>
+        <div class="fh-bar"><div class="fh-fill" style="width:90%;background:linear-gradient(90deg,var(--green),#4ade80);"></div></div>
+      </div>
+    </div>
+    <div class="fin-report-link">📄 View Full Annual Report &amp; SEC Filings →</div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="section section-alt" data-drupal="View: leadership_team / executive_grid | CT: team_member">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">View: leadership_team / executive_grid</div>
+      <h2 class="section-title" style="text-align:center;">Board &amp; Executive <em>Leadership</em></h2>
+    </div>
+    <div class="leadership-grid">
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,var(--cb),var(--cc));">RH</div>
+        <div class="leader-name">Richard H. Thornton</div>
+        <div class="leader-title">Chairman &amp; Chief Executive Officer</div>
+        <div class="leader-desc">30+ years pharma industry leadership. Former President, Global Oncology at Merck. Harvard MBA.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,#7c3aed,var(--cc));">SK</div>
+        <div class="leader-name">Dr. Sunita Krishnaswamy</div>
+        <div class="leader-title">Chief Scientific Officer</div>
+        <div class="leader-desc">PhD Biochemistry MIT. Led 8 NDA approvals. 200+ peer-reviewed publications.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,var(--gold),#f59e0b);">MW</div>
+        <div class="leader-name">Marcus Wei</div>
+        <div class="leader-title">Chief Financial Officer</div>
+        <div class="leader-desc">25 years financial leadership. Former CFO, Novartis Asia Pacific. CPA, CFA charterholder.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,#15803d,#4ade80);">AP</div>
+        <div class="leader-name">Ananya Patel</div>
+        <div class="leader-title">Chief Operations Officer</div>
+        <div class="leader-desc">Oversees 12 global manufacturing sites. IIT Mumbai, MBA Wharton. Lean Six Sigma Black Belt.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,#b91c1c,#f87171);">JF</div>
+        <div class="leader-name">Jean-François Martin</div>
+        <div class="leader-title">President, Europe &amp; Emerging Markets</div>
+        <div class="leader-desc">20 years in European pharma market access. Former SVP Roche. Sciences Po, INSEAD MBA.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar" style="background:linear-gradient(135deg,#0f766e,var(--cc));">LO</div>
+        <div class="leader-name">Lisa O'Brien</div>
+        <div class="leader-title">Chief Legal &amp; Compliance Officer</div>
+        <div class="leader-desc">JD Harvard Law. 18 years pharma regulatory &amp; corporate law. Board Governance specialist.</div>
+        <a href="#" class="leader-linkedin">in LinkedIn Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESG -->
+<section class="section" data-drupal="Paragraph: esg_pillars_block | Sub-para: esg_pillar_item × 3">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">field_eyebrow: Sustainability</div>
+      <h2 class="section-title" style="text-align:center;">Our Commitment to <em>Responsible Business</em></h2>
+      <p class="section-desc center">AxisPharma's ESG framework integrates environmental stewardship, social responsibility, and governance excellence into every business decision.</p>
+    </div>
+    <div class="esg-grid">
+      <div class="esg-card" style="border-top:3px solid #15803d;">
+        <div class="esg-icon" style="background:#dcfce7;">🌱</div>
+        <div class="esg-badge" style="background:#dcfce7;color:#15803d;">Environmental</div>
+        <h3>Planet-First Operations</h3>
+        <div class="esg-metric">30% Carbon Reduction</div>
+        <div class="esg-target">vs. 2019 baseline · Target: Net Zero by 2040</div>
+        <p>Committed to 100% renewable energy across all manufacturing sites by 2030. Water recycling at 14 facilities. Zero waste-to-landfill achieved at 8 sites.</p>
+        <div class="esg-progress"><div class="esg-fill" style="width:62%;background:linear-gradient(90deg,#15803d,#4ade80);"></div></div>
+      </div>
+      <div class="esg-card" style="border-top:3px solid var(--cb);">
+        <div class="esg-icon" style="background:var(--clc);">🤝</div>
+        <div class="esg-badge" style="background:var(--clc);color:var(--cb);">Social</div>
+        <h3>Access &amp; Equity Programs</h3>
+        <div class="esg-metric">$850M Access Investment</div>
+        <div class="esg-target">Tiered pricing in 50 developing nations · 2025</div>
+        <p>Our Access to Medicines program provides subsidized or free essential medicines to patients in low-income countries. 4.2M patients benefited in 2025.</p>
+        <div class="esg-progress"><div class="esg-fill" style="width:78%;background:linear-gradient(90deg,var(--cb),var(--cc));"></div></div>
+      </div>
+      <div class="esg-card" style="border-top:3px solid #7c3aed;">
+        <div class="esg-icon" style="background:#ede9fe;">⚖️</div>
+        <div class="esg-badge" style="background:#ede9fe;color:#7c3aed;">Governance</div>
+        <h3>Transparent Accountability</h3>
+        <div class="esg-metric">100% Transparent</div>
+        <div class="esg-target">GRI Standards · TCFD aligned · IFRS S1&amp;S2</div>
+        <p>Independent board majority (67%), annual say-on-pay vote, ESG-linked executive compensation, and full public disclosure of political contributions and lobbying activities.</p>
+        <div class="esg-progress"><div class="esg-fill" style="width:92%;background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px;"><a href="#" style="font-size:14px;font-weight:600;color:var(--cb);display:inline-flex;align-items:center;gap:6px;">Download 2025 Sustainability Report →</a></div>
+  </div>
+</section>
+
+<!-- INVESTOR CTA -->
+<section class="investor-cta" data-drupal="Paragraph: investor_cta_banner">
+  <div class="container">
+    <div class="eyebrow">field_eyebrow: For Investors</div>
+    <h2>Transparent Reporting.<br>Consistent Returns. Long-term Value.</h2>
+    <p>AxisPharma is committed to best-in-class investor communications, disciplined capital allocation, and sustained earnings growth that delivers value to shareholders over the long term.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-corp btn-lg">View Investor Dashboard →</a>
+      <a href="#" class="btn btn-outline-corp btn-lg" style="border-color:rgba(255,255,255,.3);color:#fff;">📄 Download Annual Report</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section section-alt" data-drupal="View: news_listing / press_releases | CT: news_article">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;">
+      <div>
+        <div class="eyebrow">View: news_listing / press_releases</div>
+        <h2 class="section-title">Corporate <em>News &amp; Press Releases</em></h2>
+      </div>
+      <a href="#" class="btn btn-outline-corp">All Newsroom →</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-img" style="background:linear-gradient(135deg,var(--cm),var(--cd));">📈<div class="news-cat nc-financial">Financial</div></div>
+        <div class="news-body">
+          <div class="news-date">June 20, 2026</div>
+          <h3>AxisPharma Reports Q2 2026 Results: Revenue Up 14%, Raises Full-Year Guidance</h3>
+          <p>Strong oncology and rare disease performance drives record quarterly revenue of $2.3B, with EPS of $3.42 beating consensus by $0.18...</p>
+          <a href="#" class="news-read">Read Press Release →</a>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img" style="background:linear-gradient(135deg,#1a1030,var(--cm));">🏆<div class="news-cat nc-press">Press Release</div></div>
+        <div class="news-body">
+          <div class="news-date">June 15, 2026</div>
+          <h3>AXP-8821 Receives FDA Breakthrough Therapy Designation for ALK+ Non-Small Cell Lung Cancer</h3>
+          <p>Designation based on compelling Phase II data showing 82% overall response rate — NDA submission expected Q4 2026...</p>
+          <a href="#" class="news-read">Read Press Release →</a>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img" style="background:linear-gradient(135deg,#0a2f1f,var(--cm));">🌱<div class="news-cat nc-corporate">Corporate</div></div>
+        <div class="news-body">
+          <div class="news-date">June 8, 2026</div>
+          <h3>AxisPharma Achieves 30% Carbon Reduction Milestone, Accelerates Net Zero Target to 2038</h3>
+          <p>Manufacturing energy efficiency program delivers ahead of schedule — new target set for 2038, 2 years earlier than committed...</p>
+          <a href="#" class="news-read">Read Press Release →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<div class="certs-band" data-drupal="Paragraph: certifications_band | Sub-para: certification_item × 8">
+  <div class="container">
+    <div class="certs-label">field_heading: Certifications &amp; Industry Affiliations</div>
+    <div class="certs-row">
+      <div class="cert-item"><span>🌐</span> WHO Pre-Qualified</div>
+      <div class="cert-item"><span>🇺🇸</span> FDA Approved</div>
+      <div class="cert-item"><span>🇪🇺</span> EMA Authorized</div>
+      <div class="cert-item"><span>⚗️</span> GMP Certified</div>
+      <div class="cert-item"><span>📋</span> ISO 9001:2015</div>
+      <div class="cert-item"><span>🏛</span> ICH Q10</div>
+      <div class="cert-item"><span>🤝</span> IFPMA Member</div>
+      <div class="cert-item"><span>💊</span> PhRMA Member</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" data-drupal="Region: footer | Block: footer_corp">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom:14px;display:flex;">
+          <div class="logo-mark">🏛</div>
+          <div class="logo-text"><strong>AxisPharma</strong><span>Science. Scale. Impact.</span></div>
+        </a>
+        <p>A century of pharmaceutical innovation. Headquartered in New York, operating in 80+ countries, committed to advancing patient lives through science and corporate excellence.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social">in</a>
+          <a href="#" class="footer-social">𝕏</a>
+          <a href="#" class="footer-social">f</a>
+          <a href="#" class="footer-social">▶</a>
+        </div>
+        <div class="footer-stock">
+          <div><div class="sym">NYSE: AXP</div><div style="font-size:10px;color:var(--cs);">Real-time quote</div></div>
+          <div><div class="price">$124.50</div><div class="chg">▲ +2.3%</div></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul><li><a href="#">About AxisPharma</a></li><li><a href="#">Leadership</a></li><li><a href="#">Corporate Governance</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Careers</a></li><li><a href="#">Awards</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Science</h5>
+        <ul><li><a href="#">R&amp;D Overview</a></li><li><a href="#">Pipeline Table</a></li><li><a href="#">Therapeutic Areas</a></li><li><a href="#">Publications</a></li><li><a href="#">Clinical Trials</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Investors</h5>
+        <ul><li><a href="#">Financial Results</a></li><li><a href="#">Annual Report</a></li><li><a href="#">SEC Filings</a></li><li><a href="#">Dividend History</a></li><li><a href="#">Events &amp; Calendar</a></li><li><a href="#">Investor FAQ</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul><li><a href="#">Global HQ: New York</a></li><li><a href="#">Media Inquiries</a></li><li><a href="#">Medical Affairs</a></li><li><a href="#">Pharmacovigilance</a></li><li><a href="#">Business Development</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AxisPharma Global Corporation. All rights reserved. Incorporated in Delaware, USA.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+        <a href="#">Cookie Policy</a><a href="#">Accessibility</a><a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legal-bar">
+    <p>The information on this website is intended for informational purposes only and does not constitute investment advice or a solicitation to buy or sell securities. Past performance is not indicative of future results. Forward-looking statements involve risks and uncertainties. AxisPharma Global Corporation — NYSE: AXP. For full legal disclaimer and risk factors, see our most recent Annual Report on Form 10-K filed with the SEC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AxisPharma — Products &amp; Manufacturing</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cd:#0B1F3A;--cm:#132D55;--cb:#1E5FAD;--cc:#00B4D8;
+  --clc:#E0F7FA;--cs:#8EA8C3;--w:#fff;
+  --g50:#F8F9FC;--g100:#EEF0F6;--g200:#D8DFF0;--g600:#4A5A7A;--g900:#0D1B2A;
+  --gold:#D4A017;--green:#15803d;--red:#b91c1c;--amber:#b45309;
+  --sh:0 4px 24px rgba(11,31,58,.15);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;font-size:10.5pt;color:var(--g900);background:#fff;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+[data-drupal]{position:relative;}
+[data-drupal]::before{content:attr(data-drupal);position:absolute;top:0;left:0;background:#e94560;color:#fff;font-size:8px;font-family:monospace;font-weight:700;padding:2px 7px;border-radius:0 0 5px 0;z-index:99;pointer-events:none;white-space:nowrap;}
+
+/* REUSED COMPONENTS */
+.utility-bar{background:var(--cd);padding:9px 0;font-size:12px;}
+.utility-inner{display:flex;justify-content:space-between;align-items:center;}
+.stock-ticker{display:flex;align-items:center;gap:10px;color:var(--cs);}
+.stock-price{color:#fff;font-weight:700;font-family:'Montserrat',sans-serif;}
+.stock-change{color:#4ade80;font-weight:600;font-size:11px;}
+.exchange-tag{background:rgba(0,180,216,.15);color:var(--cc);font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;}
+.utility-links{display:flex;gap:20px;align-items:center;}
+.utility-links a{color:var(--cs);font-size:11.5px;transition:color .2s;}
+.utility-links a:hover{color:var(--cc);}
+.utility-links .sep{color:#2a3f5f;}
+.utility-links .lang{color:var(--cc);font-weight:600;}
+.site-header{background:#fff;border-bottom:1px solid var(--g200);position:sticky;top:0;z-index:1000;box-shadow:0 2px 12px rgba(11,31,58,.08);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:42px;height:42px;background:linear-gradient(135deg,var(--cb),var(--cc));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-text strong{display:block;font-family:'Montserrat',sans-serif;font-size:17pt;font-weight:900;color:var(--cd);letter-spacing:-1px;}
+.logo-text span{font-size:8.5pt;color:var(--cc);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.main-nav{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
+.nav-item{position:relative;}
+.main-nav a{display:flex;align-items:center;gap:4px;padding:8px 13px;font-size:13px;font-weight:500;color:var(--g600);border-radius:6px;transition:all .2s;white-space:nowrap;}
+.main-nav a:hover,.main-nav a.active{color:var(--cb);background:var(--g50);}
+.has-dd>a::after{content:'▾';font-size:9px;opacity:.5;}
+.dropdown-menu{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--g200);border-top:3px solid var(--cc);border-radius:8px;min-width:200px;padding:8px;box-shadow:var(--sh);display:none;}
+.nav-item:hover .dropdown-menu{display:block;}
+.dropdown-menu a{display:block;padding:8px 12px;font-size:12.5px;color:var(--g600);border-radius:5px;}
+.dropdown-menu a:hover{background:var(--clc);color:var(--cb);}
+.mega-menu{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--g200);border-top:3px solid var(--cc);border-radius:10px;min-width:520px;padding:18px;box-shadow:var(--sh);display:none;}
+.nav-item:hover .mega-menu{display:block;}
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.mega-item{display:flex;gap:10px;padding:9px 10px;border-radius:7px;transition:background .2s;}
+.mega-item:hover{background:var(--g50);}
+.mega-item-icon{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.mega-item-text strong{display:block;font-size:12px;font-weight:600;color:var(--g900);}
+.mega-item-text span{font-size:11px;color:var(--cs);}
+.header-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+.btn-corp{background:var(--cb);color:#fff;}
+.btn-corp:hover{background:var(--cd);}
+.btn-outline-corp{border:1.5px solid var(--g200);color:var(--g600);background:#fff;}
+.btn-outline-corp:hover{border-color:var(--cb);color:var(--cb);}
+.btn-lg{padding:13px 28px;font-size:14px;border-radius:7px;}
+.btn-cyan{background:var(--cc);color:var(--cd);}
+.btn-cyan:hover{background:#0095B8;}
+.search-btn{width:36px;height:36px;border-radius:6px;border:1.5px solid var(--g200);display:flex;align-items:center;justify-content:center;color:var(--cs);font-size:15px;cursor:pointer;}
+
+/* PAGE SECTIONS */
+.section{padding:80px 0;}
+.section-alt{background:var(--g50);}
+.section-dark{background:var(--cd);}
+.eyebrow{font-size:11px;font-weight:700;color:var(--cc);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--cc);}
+.section-title{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--cd);line-height:1.15;margin-bottom:14px;}
+.section-title em{font-style:normal;color:var(--cb);}
+.section-title.white{color:#fff;}
+.section-desc{font-size:15px;color:var(--g600);line-height:1.8;margin-bottom:28px;}
+.section-header-center{text-align:center;margin-bottom:48px;}
+.section-desc.center{max-width:560px;margin:0 auto 28px;}
+.section-desc.white{color:var(--cs);}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--cs);margin-bottom:18px;}
+.breadcrumb a{color:var(--cc);font-weight:500;}
+.breadcrumb .sep{color:#2a3f5f;}
+.breadcrumb .current{color:rgba(255,255,255,.7);font-weight:600;}
+
+/* INNER HERO */
+.inner-hero{background:linear-gradient(135deg,var(--cd) 0%,var(--cm) 60%,#0D2E5C 100%);padding:56px 0 48px;position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.05);}
+.inner-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--cc),transparent);}
+.inner-hero h1{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:12px;padding-left:16px;border-left:3px solid var(--cc);}
+.inner-hero p{color:var(--cs);font-size:15px;line-height:1.75;max-width:620px;margin-bottom:22px;}
+.inner-stat-pills{display:flex;gap:12px;flex-wrap:wrap;}
+.inner-pill{display:flex;align-items:center;gap:7px;background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.25);color:var(--cc);font-size:12px;font-weight:700;padding:6px 14px;border-radius:4px;}
+
+/* PRODUCT SEARCH */
+.search-section{background:#fff;padding:44px 0;border-bottom:1px solid var(--g200);}
+.search-form{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.search-input-wrap{flex:1;min-width:280px;position:relative;}
+.search-input-wrap input{width:100%;padding:12px 18px 12px 44px;border:1.5px solid var(--g200);border-radius:7px;font-size:14px;color:var(--g900);font-family:'Inter',sans-serif;outline:none;}
+.search-input-wrap input:focus{border-color:var(--cc);}
+.search-input-wrap .si{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--cs);}
+.filter-select{padding:12px 16px;border:1.5px solid var(--g200);border-radius:7px;font-size:13px;color:var(--g600);font-family:'Inter',sans-serif;background:#fff;outline:none;min-width:180px;}
+.filter-select:focus{border-color:var(--cc);}
+.search-actions{display:flex;gap:8px;}
+
+/* PRODUCTS GRID */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+.corp-product-card{border:1.5px solid var(--g200);border-radius:10px;overflow:hidden;transition:all .3s;}
+.corp-product-card:hover{border-color:var(--cc);box-shadow:var(--sh);transform:translateY(-3px);}
+.prod-banner{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.prod-area-tag{font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;}
+.prod-approval{background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;}
+.prod-body{padding:18px 20px;}
+.prod-brand{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:900;color:var(--cd);margin-bottom:3px;}
+.prod-generic{font-size:12px;color:var(--cs);font-style:italic;margin-bottom:12px;}
+.prod-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
+.prod-spec{background:var(--g50);border-radius:5px;padding:7px 9px;}
+.prod-spec .spec-lbl{font-size:9.5px;color:var(--cs);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.prod-spec .spec-val{font-size:12.5px;font-weight:700;color:var(--g900);}
+.prod-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--g100);}
+.prod-actions a{flex:1;text-align:center;padding:8px;font-size:12px;font-weight:600;border-radius:5px;transition:all .2s;}
+.pa-primary{background:var(--cb);color:#fff;}
+.pa-primary:hover{background:var(--cd);}
+.pa-secondary{background:var(--g100);color:var(--g600);}
+.pa-secondary:hover{background:var(--g200);}
+
+/* MANUFACTURING EXCELLENCE (dark) */
+.mfg-excellence{background:var(--cd);padding:80px 0;}
+.mfg-excellence .section-title{color:#fff;}
+.mfg-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:44px;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;}
+.mfg-col{padding:32px 28px;position:relative;}
+.mfg-col+.mfg-col{border-left:1px solid rgba(255,255,255,.08);}
+.mfg-col-title{font-size:11px;font-weight:700;color:var(--cc);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.mfg-col-title::before{content:'';display:block;width:16px;height:2px;background:var(--cc);}
+.mfg-stat-item{margin-bottom:14px;}
+.mfg-stat-item .msi-num{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1;}
+.mfg-stat-item .msi-lbl{font-size:12px;color:var(--cs);margin-top:3px;}
+.mfg-cap-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.mfg-cap-list li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.75);}
+.mfg-cap-list li::before{content:'▸';color:var(--cc);flex-shrink:0;}
+.mfg-quality-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.mfg-quality-list li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.75);}
+.mfg-quality-list li::before{content:'✓';color:#4ade80;flex-shrink:0;font-weight:700;}
+
+/* MANUFACTURING SITES */
+.sites-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px;}
+.site-card{background:#fff;border:1.5px solid var(--g200);border-radius:10px;padding:20px;transition:all .3s;}
+.site-card:hover{border-color:var(--cc);box-shadow:var(--sh);}
+.site-flag{font-size:26px;margin-bottom:10px;}
+.site-name{font-size:13px;font-weight:800;color:var(--cd);margin-bottom:2px;font-family:'Montserrat',sans-serif;}
+.site-location{font-size:12px;color:var(--cs);margin-bottom:10px;}
+.site-cap{font-size:12.5px;color:var(--g600);margin-bottom:10px;line-height:1.5;}
+.site-certs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.site-cert{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:3px;}
+.sc-fda{background:#dbeafe;color:#1d4ed8;}
+.sc-who{background:#dcfce7;color:var(--green);}
+.sc-eu{background:#ede9fe;color:#6d28d9;}
+.sc-cdsco{background:#fff7ed;color:#c2410c;}
+.site-yr{font-size:11px;color:var(--cs);}
+
+/* TECH PLATFORMS */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;}
+.tech-card{border:1.5px solid var(--g200);border-radius:10px;padding:22px;transition:all .3s;}
+.tech-card:hover{border-color:var(--cc);box-shadow:var(--sh);}
+.tech-icon{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
+.tech-card h3{font-size:14px;font-weight:800;color:var(--cd);margin-bottom:8px;font-family:'Montserrat',sans-serif;}
+.tech-card p{font-size:12.5px;color:var(--g600);line-height:1.6;margin-bottom:12px;}
+.tech-products{display:flex;flex-direction:column;gap:4px;}
+.tech-products span{font-size:11.5px;color:var(--cs);display:flex;align-items:center;gap:6px;}
+.tech-products span::before{content:'●';font-size:7px;color:var(--cc);}
+
+/* QUALITY COMPLIANCE */
+.quality-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.quality-pillars{display:flex;flex-direction:column;gap:16px;margin:20px 0 26px;}
+.quality-pillar{display:flex;gap:14px;padding:16px;background:var(--g50);border-radius:8px;border-left:3px solid var(--cc);}
+.qp-icon{font-size:22px;flex-shrink:0;}
+.qp-title{font-size:13px;font-weight:700;color:var(--cd);margin-bottom:4px;}
+.qp-desc{font-size:12px;color:var(--g600);line-height:1.5;}
+.compliance-table{width:100%;border-collapse:collapse;}
+.compliance-table th{background:var(--cd);color:#fff;padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.compliance-table td{padding:10px 14px;border-bottom:1px solid var(--g100);font-size:12.5px;color:var(--g600);vertical-align:middle;}
+.compliance-table tr:last-child td{border-bottom:none;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:3px;}
+.status-compliant{background:#dcfce7;color:var(--green);}
+.status-compliant::before{content:'●';font-size:9px;}
+
+/* API DEV (dark) */
+.api-section{background:var(--cd);padding:80px 0;}
+.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.api-stats{display:flex;flex-direction:column;gap:16px;margin:20px 0;}
+.api-stat{display:flex;align-items:center;gap:14px;padding:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;}
+.api-stat-num{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:900;color:var(--cc);min-width:60px;}
+.api-stat-lbl{font-size:13px;color:rgba(255,255,255,.7);}
+.api-service-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.api-service-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px;transition:all .2s;}
+.api-service-card:hover{background:rgba(255,255,255,.1);border-color:rgba(0,180,216,.3);}
+.asc-icon{font-size:22px;margin-bottom:10px;}
+.asc-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;}
+.asc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.asc-list li{font-size:12px;color:var(--cs);display:flex;gap:6px;align-items:flex-start;}
+.asc-list li::before{content:'→';color:var(--cc);flex-shrink:0;}
+
+/* SUPPLY CHAIN */
+.sc-flow{display:flex;align-items:flex-start;gap:0;margin-top:44px;position:relative;}
+.sc-stage{flex:1;text-align:center;padding:0 12px;position:relative;}
+.sc-stage::after{content:'→';position:absolute;right:-18px;top:30px;font-size:22px;color:var(--cc);font-weight:700;}
+.sc-stage:last-child::after{display:none;}
+.sc-circle{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--cb),var(--cc));display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;box-shadow:0 0 0 8px rgba(0,180,216,.1);}
+.sc-num{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--cc);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.sc-stage h4{font-size:14px;font-weight:800;color:var(--cd);margin-bottom:8px;}
+.sc-stage p{font-size:12.5px;color:var(--g600);line-height:1.6;margin-bottom:10px;}
+.sc-metric{font-size:12px;font-weight:700;color:var(--cb);}
+.sc-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px;}
+.sc-kpi{background:#fff;border:1.5px solid var(--g200);border-radius:8px;padding:16px;text-align:center;border-top:3px solid var(--cc);}
+.sc-kpi .num{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:900;color:var(--cd);}
+.sc-kpi .lbl{font-size:12px;color:var(--cs);margin-top:4px;}
+
+/* REGULATORY TABLE */
+.reg-table{width:100%;border-collapse:collapse;margin-top:36px;}
+.reg-table th{background:var(--cd);color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.reg-table td{padding:11px 14px;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g600);vertical-align:middle;}
+.reg-table tr:nth-child(even) td{background:var(--g50);}
+.reg-table tr:hover td{background:var(--clc);}
+.prod-name-cell{font-weight:700;color:var(--cd);}
+.sub-type{font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;text-transform:uppercase;}
+.st-nda{background:#dcfce7;color:var(--green);}
+.st-anda{background:#dbeafe;color:#1d4ed8;}
+.st-maa{background:#ede9fe;color:#6d28d9;}
+.reg-status{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:3px;}
+.rs-approved{background:#dcfce7;color:var(--green);}
+.rs-review{background:#dbeafe;color:#1d4ed8);}
+.rs-submitted{background:#fff7ed;color:var(--amber);}
+
+/* PARTNER CTA */
+.partner-cta{background:var(--cd);padding:80px 0;text-align:center;position:relative;border-top:3px solid var(--cc);}
+.partner-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,180,216,.07) 0%,transparent 65%);pointer-events:none;}
+.partner-options{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:780px;margin:32px auto 36px;position:relative;}
+.partner-option{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:22px;transition:all .2s;cursor:pointer;}
+.partner-option:hover{background:rgba(255,255,255,.12);border-color:rgba(0,180,216,.4);}
+.po-icon{font-size:26px;margin-bottom:10px;}
+.po-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;font-family:'Montserrat',sans-serif;}
+.po-desc{font-size:12.5px;color:var(--cs);}
+.partner-cta-buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;}
+
+/* CERTS BAND */
+.certs-band{background:var(--g50);padding:44px 0;border-top:1px solid var(--g200);border-bottom:1px solid var(--g200);}
+.certs-label{text-align:center;font-size:11px;font-weight:700;color:var(--cs);letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;}
+.certs-row{display:flex;justify-content:center;align-items:center;gap:32px;flex-wrap:wrap;}
+.cert-item{display:flex;align-items:center;gap:7px;color:var(--cs);font-size:13px;font-weight:700;opacity:.65;transition:opacity .2s;}
+.cert-item:hover{opacity:1;}
+.cert-item span{width:28px;height:28px;background:var(--g200);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+
+/* FOOTER */
+.site-footer{background:var(--cd);padding:64px 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.footer-brand p{color:var(--cs);font-size:13px;line-height:1.75;max-width:260px;margin-bottom:16px;}
+.footer-socials{display:flex;gap:8px;margin-bottom:14px;}
+.footer-social{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--cs);font-size:13px;transition:all .2s;}
+.footer-social:hover{background:var(--cc);color:var(--cd);border-color:var(--cc);}
+.footer-stock{background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.2);border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.footer-stock .sym{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:900;color:#fff;}
+.footer-stock .price{color:var(--cc);font-weight:700;font-size:14px;}
+.footer-stock .chg{color:#4ade80;font-size:11px;}
+.footer-col h5{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08);text-transform:uppercase;letter-spacing:.5px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul li a{font-size:13px;color:var(--cs);transition:color .2s;}
+.footer-col ul li a:hover{color:var(--cc);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-bottom p{font-size:12px;color:var(--cs);}
+.footer-bottom-links{display:flex;gap:18px;}
+.footer-bottom-links a{font-size:12px;color:var(--cs);transition:color .2s;}
+.footer-bottom-links a:hover{color:var(--cc);}
+.footer-legal-bar{background:rgba(0,0,0,.25);padding:14px 0;text-align:center;}
+.footer-legal-bar p{font-size:10.5px;color:rgba(255,255,255,.2);max-width:880px;margin:0 auto;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<!-- REUSED: UTILITY BAR -->
+<div class="utility-bar" data-drupal="Block: corp_utility_bar | Region: utility_bar | REUSED">
+  <div class="container">
+    <div class="utility-inner">
+      <div class="stock-ticker">
+        <span class="exchange-tag">NYSE</span>
+        <span class="stock-price">AXP</span>
+        <span style="color:var(--cs);">$124.50</span>
+        <span class="stock-change">▲ 2.3% (+$2.80)</span>
+        <span style="color:#2a3f5f;">|</span>
+        <span style="color:var(--cs);font-size:11px;">Market Cap: $42.1B</span>
+      </div>
+      <div class="utility-links">
+        <a href="#">Investor Relations</a><span class="sep">|</span>
+        <a href="#">Careers</a><span class="sep">|</span>
+        <a href="#">Media</a><span class="sep">|</span>
+        <a href="#" class="lang">🌐 EN</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REUSED: HEADER — "Products & Mfg" active -->
+<header class="site-header" data-drupal="Block: main_navigation | Region: header | REUSED — active: Products &amp; Mfg">
+  <div class="container">
+    <div class="header-inner">
+      <a href="pharma-theme-3-axispharma.html" class="logo">
+        <div class="logo-mark">🏛</div>
+        <div class="logo-text"><strong>AxisPharma</strong><span>Science. Scale. Impact.</span></div>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-item"><a href="pharma-theme-3-axispharma.html">Home</a></div>
+        <div class="nav-item has-dd">
+          <a href="#">About Us</a>
+          <div class="dropdown-menu"><a href="#">Our Story</a><a href="#">Leadership</a><a href="#">Governance</a><a href="#">Sustainability</a></div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="#">Therapeutics</a>
+          <div class="mega-menu"><div class="mega-grid">
+            <div class="mega-item"><div class="mega-item-icon" style="background:#fff0f0;">🎗️</div><div class="mega-item-text"><strong>Oncology</strong><span>Targeted therapy</span></div></div>
+            <div class="mega-item"><div class="mega-item-icon" style="background:#fff0e0;">❤️</div><div class="mega-item-text"><strong>Cardiovascular</strong><span>Heart &amp; BP</span></div></div>
+            <div class="mega-item"><div class="mega-item-icon" style="background:#f0f0ff;">🧠</div><div class="mega-item-text"><strong>Neurology</strong><span>CNS disorders</span></div></div>
+            <div class="mega-item"><div class="mega-item-icon" style="background:var(--clc);">🧬</div><div class="mega-item-text"><strong>Rare &amp; Genetic</strong><span>Gene therapy</span></div></div>
+            <div class="mega-item"><div class="mega-item-icon" style="background:#f0fff0;">🛡️</div><div class="mega-item-text"><strong>Immunology</strong><span>Biologics</span></div></div>
+            <div class="mega-item"><div class="mega-item-icon" style="background:#e0f0ff;">🫁</div><div class="mega-item-text"><strong>Respiratory</strong><span>COPD &amp; Asthma</span></div></div>
+          </div></div>
+        </div>
+        <div class="nav-item"><a href="pharma-theme-3-axispharma-p2.html" class="active">Products &amp; Mfg</a></div>
+        <div class="nav-item has-dd"><a href="#">Pipeline</a><div class="dropdown-menu"><a href="#">R&amp;D Overview</a><a href="#">Pipeline Table</a><a href="#">Publications</a></div></div>
+        <div class="nav-item has-dd"><a href="#">Investors</a><div class="dropdown-menu"><a href="#">Financial Results</a><a href="#">Annual Report</a><a href="#">SEC Filings</a></div></div>
+        <div class="nav-item"><a href="#">Newsroom</a></div>
+        <div class="nav-item"><a href="#">Careers</a></div>
+      </nav>
+      <div class="header-actions">
+        <button class="search-btn">🔍</button>
+        <a href="#" class="btn btn-corp">Investor Portal</a>
+        <a href="#" class="btn btn-outline-corp">Contact</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- INNER HERO -->
+<section class="inner-hero" data-drupal="Paragraph: corp_inner_hero | NEW COMPONENT">
+  <div class="container">
+    <nav class="breadcrumb"><a href="pharma-theme-3-axispharma.html">Home</a><span class="sep">›</span><span class="current">Products &amp; Manufacturing</span></nav>
+    <h1>Our Product Portfolio &amp;<br>Manufacturing Excellence</h1>
+    <p>200+ marketed medicines across 6 therapeutic areas, manufactured at 12 WHO-GMP certified global facilities — delivering quality, scale, and reliability to every market we serve.</p>
+    <div class="inner-stat-pills">
+      <div class="inner-pill">💊 200+ Products</div>
+      <div class="inner-pill">🏭 12 GMP Facilities</div>
+      <div class="inner-pill">🌍 35 Direct Markets</div>
+      <div class="inner-pill">✅ 100% Quality Compliance</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT SEARCH -->
+<div class="search-section" data-drupal="Block: product_search_filter | AJAX Views exposed filter | NEW">
+  <div class="container">
+    <div class="search-form">
+      <div class="search-input-wrap">
+        <span class="si">🔍</span>
+        <input type="text" placeholder="Search products by name, molecule, or indication...">
+      </div>
+      <select class="filter-select"><option>All Therapeutic Areas</option><option>Oncology</option><option>Cardiovascular</option><option>Neurology</option><option>Rare &amp; Genetic</option><option>Immunology</option><option>Respiratory</option></select>
+      <select class="filter-select"><option>All Formulations</option><option>Tablets / Capsules</option><option>Sterile Injectables</option><option>Inhalers (DPI/MDI)</option><option>Biologics</option><option>Transdermal Patches</option></select>
+      <select class="filter-select"><option>All Markets</option><option>USA / Canada</option><option>European Union</option><option>India</option><option>Japan</option><option>Rest of World</option></select>
+      <div class="search-actions">
+        <button class="btn btn-corp">Apply Filters</button>
+        <button class="btn btn-outline-corp">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS GRID -->
+<section class="section section-alt" data-drupal="View: products_listing / corporate_grid | CT: product | NEW display">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
+      <div><div class="eyebrow">View: products_listing / corporate_grid</div><h2 class="section-title">Featured <em>Product Portfolio</em></h2></div>
+      <a href="#" class="btn btn-outline-corp">View All 200+ Products →</a>
+    </div>
+    <div class="products-grid">
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,#991b1b,#b91c1c);"><span class="prod-area-tag">Oncology</span><span class="prod-approval">FDA Approved</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">AXICELL® 200mg</div>
+          <div class="prod-generic">Lorlatinib</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">Film-Coated Tab</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">100mg / 200mg</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">30 / 90 Tabs</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Once Daily</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,#b45309,#d97706);"><span class="prod-area-tag">Cardiovascular</span><span class="prod-approval">EMA &amp; FDA</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">CARDIAXIS® Plus</div>
+          <div class="prod-generic">Sacubitril + Valsartan</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">Film-Coated Tab</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">49+51mg / 97+103mg</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">28 / 56 Tabs</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Twice Daily</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,#4c1d95,#6d28d9);"><span class="prod-area-tag">Neurology</span><span class="prod-approval">FDA Approved</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">NEUROAXIS® SR</div>
+          <div class="prod-generic">Levetiracetam Extended-Release</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">SR Tablet</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">500/750/1000mg</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">60 / 120 Tabs</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Once Daily</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,#0f766e,var(--cc));"><span class="prod-area-tag">Rare &amp; Genetic</span><span class="prod-approval">Orphan Drug</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">RAREAXIS® IV</div>
+          <div class="prod-generic">Idursulfase alfa (rDNA)</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">IV Infusion</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">2mg/mL</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">3mg / 6mg vials</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Weekly Infusion</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,#15803d,#16a34a);"><span class="prod-area-tag">Immunology</span><span class="prod-approval">FDA &amp; EMA</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">IMMUAXIS® 40</div>
+          <div class="prod-generic">Ustekinumab (biosimilar)</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">SC Injection Pen</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">45mg / 90mg</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">1 prefilled syringe</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Q12W (maintenance)</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+      <div class="corp-product-card">
+        <div class="prod-banner" style="background:linear-gradient(90deg,var(--cb),#1d4ed8);"><span class="prod-area-tag">Respiratory</span><span class="prod-approval">EMA Approved</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">BREATHAXIS® Trio</div>
+          <div class="prod-generic">Budesonide/Formoterol/Glycopyrronium</div>
+          <div class="prod-specs">
+            <div class="prod-spec"><div class="spec-lbl">Form</div><div class="spec-val">pMDI Inhaler</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Strength</div><div class="spec-val">160/4.8/7.2mcg</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Pack</div><div class="spec-val">120 actuations</div></div>
+            <div class="prod-spec"><div class="spec-lbl">Dosing</div><div class="spec-val">Twice Daily</div></div>
+          </div>
+          <div class="prod-actions"><a href="#" class="pa-primary">SmPC / PI</a><a href="#" class="pa-secondary">Order Info</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANUFACTURING EXCELLENCE -->
+<section class="mfg-excellence" data-drupal="Paragraph: manufacturing_excellence | NEW COMPONENT">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">field_eyebrow: Infrastructure</div>
+      <h2 class="section-title white" style="text-align:center;">World-Class <em style="color:var(--cc);">Manufacturing Infrastructure</em></h2>
+      <p class="section-desc center white">12 global manufacturing sites, 3 continents, 100B+ unit annual capacity — built to the highest quality standards in the industry.</p>
+    </div>
+    <div class="mfg-grid">
+      <div class="mfg-col">
+        <div class="mfg-col-title">By the Numbers</div>
+        <div class="mfg-stat-item"><div class="msi-num">12</div><div class="msi-lbl">Global Facilities (8 Countries)</div></div>
+        <div class="mfg-stat-item"><div class="msi-num">100B+</div><div class="msi-lbl">Unit Annual Production Capacity</div></div>
+        <div class="mfg-stat-item"><div class="msi-num">$1.2B</div><div class="msi-lbl">Capital Investment 2022–2025</div></div>
+        <div class="mfg-stat-item"><div class="msi-num">18,000</div><div class="msi-lbl">Manufacturing Workforce Globally</div></div>
+      </div>
+      <div class="mfg-col">
+        <div class="mfg-col-title">Capabilities</div>
+        <ul class="mfg-cap-list">
+          <li>API Synthesis (chemical &amp; biotech routes)</li>
+          <li>Oral Solid Dosage (tablets, capsules, SR/CR)</li>
+          <li>Sterile Injectables (lyophilized &amp; liquid vials)</li>
+          <li>Biologics &amp; Biosimilars (mammalian &amp; microbial)</li>
+          <li>Inhalation Products (DPI, MDI, nasal sprays)</li>
+          <li>Controlled Release Technologies (OROS, matrix)</li>
+          <li>Transdermal Drug Delivery systems</li>
+          <li>Prefilled Syringes &amp; Auto-injector Pens</li>
+        </ul>
+      </div>
+      <div class="mfg-col">
+        <div class="mfg-col-title">Quality System</div>
+        <ul class="mfg-quality-list">
+          <li>WHO-GMP certified at all 12 facilities</li>
+          <li>FDA PAI clearance — all US-supply sites</li>
+          <li>EU-GMP authorization — 6 European sites</li>
+          <li>ICH Q10 Pharmaceutical Quality System</li>
+          <li>QbD (Quality-by-Design) across all new projects</li>
+          <li>Zero Critical OAIs since 2019</li>
+          <li>Real-time release testing implemented at 8 sites</li>
+          <li>ISO 15378 Primary Packaging compliance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANUFACTURING SITES -->
+<section class="section" data-drupal="CT: manufacturing_site | View: manufacturing_sites / site_grid | NEW CT">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">CT: manufacturing_site</div>
+      <h2 class="section-title" style="text-align:center;">Global <em>Manufacturing Sites</em></h2>
+    </div>
+    <div class="sites-grid">
+      <div class="site-card"><div class="site-flag">🇺🇸</div><div class="site-name">New Jersey Campus</div><div class="site-location">Parsippany, USA</div><div class="site-cap">Sterile Injectables &amp; Biologics — 800M units/year</div><div class="site-certs"><span class="site-cert sc-fda">FDA</span><span class="site-cert sc-who">WHO</span><span class="site-cert sc-eu">EU-GMP</span></div><div class="site-yr">Est. 1968</div></div>
+      <div class="site-card"><div class="site-flag">🇮🇳</div><div class="site-name">Hyderabad API Plant</div><div class="site-location">Hyderabad, India</div><div class="site-cap">API Manufacturing — 1,200MT/year capacity</div><div class="site-certs"><span class="site-cert sc-fda">FDA</span><span class="site-cert sc-who">WHO</span><span class="site-cert sc-cdsco">CDSCO</span></div><div class="site-yr">Est. 1992</div></div>
+      <div class="site-card"><div class="site-flag">🇩🇪</div><div class="site-name">Frankfurt OSD Facility</div><div class="site-location">Frankfurt, Germany</div><div class="site-cap">Oral Solid Dosage — 6B tablets/year</div><div class="site-certs"><span class="site-cert sc-eu">EU-GMP</span><span class="site-cert sc-who">WHO</span></div><div class="site-yr">Est. 2004</div></div>
+      <div class="site-card"><div class="site-flag">🇸🇬</div><div class="site-name">Singapore Biotech Hub</div><div class="site-location">Jurong Island, Singapore</div><div class="site-cap">Biologics &amp; Biosimilars — 50,000L bioreactor</div><div class="site-certs"><span class="site-cert sc-fda">FDA</span><span class="site-cert sc-eu">EU-GMP</span><span class="site-cert sc-who">WHO</span></div><div class="site-yr">Est. 2016</div></div>
+      <div class="site-card"><div class="site-flag">🇮🇪</div><div class="site-name">Cork Inhalation Plant</div><div class="site-location">Cork, Ireland</div><div class="site-cap">DPI &amp; MDI Inhalers — 120M devices/year</div><div class="site-certs"><span class="site-cert sc-eu">EU-GMP</span><span class="site-cert sc-fda">FDA</span></div><div class="site-yr">Est. 2010</div></div>
+      <div class="site-card"><div class="site-flag">🇧🇷</div><div class="site-name">São Paulo OSD Plant</div><div class="site-location">São Paulo, Brazil</div><div class="site-cap">Oral Solids for LATAM — 2B units/year</div><div class="site-certs"><span class="site-cert sc-who">WHO</span><span class="site-cert sc-cdsco" style="background:#fce7f3;color:#9d174d;">ANVISA</span></div><div class="site-yr">Est. 1998</div></div>
+      <div class="site-card"><div class="site-flag">🇯🇵</div><div class="site-name">Osaka Sterile Facility</div><div class="site-location">Osaka, Japan</div><div class="site-cap">Lyophilized &amp; Liquid Injectables — 40M vials</div><div class="site-certs"><span class="site-cert sc-eu">PMDA</span><span class="site-cert sc-who">WHO</span></div><div class="site-yr">Est. 2008</div></div>
+      <div class="site-card"><div class="site-flag">🇨🇭</div><div class="site-name">Basel R&amp;D Manufacturing</div><div class="site-location">Basel, Switzerland</div><div class="site-cap">Clinical &amp; Launch Supply — all dosage forms</div><div class="site-certs"><span class="site-cert sc-eu">EU-GMP</span><span class="site-cert sc-fda">FDA</span><span class="site-cert sc-who">WHO</span></div><div class="site-yr">Est. 2002</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH PLATFORMS -->
+<section class="section section-alt" data-drupal="Paragraph: technology_platforms | Sub-para: tech_platform_item × 6 | NEW">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">Paragraph: technology_platforms</div>
+      <h2 class="section-title" style="text-align:center;">Technology <em>Platforms</em> &amp; Formulation Expertise</h2>
+      <p class="section-desc center">Proprietary technology platforms that enable next-generation formulations, differentiated drug delivery, and superior patient outcomes.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="tech-icon" style="background:#fff7ed;">⚙️</div><h3>Controlled Release</h3><p>OROS, matrix tablet, and multiparticulate systems enabling SR/CR/XR formulations with precise release profiles.</p><div class="tech-products"><span>NEUROAXIS® SR (1000mg once-daily)</span><span>CARDIAXIS® CR (12hr formulation)</span><span>8 active CR development projects</span></div></div>
+      <div class="tech-card"><div class="tech-icon" style="background:#eff6ff;">💉</div><h3>Sterile Injectables</h3><p>Lyophilization, liquid-fill, and ready-to-use prefilled formats for biologics, small molecules, and peptides.</p><div class="tech-products"><span>RAREAXIS® IV (lyophilized enzyme)</span><span>3 ready-to-use vials in development</span><span>Isolator technology for HPAPIs</span></div></div>
+      <div class="tech-card"><div class="tech-icon" style="background:#f0fdf4;">🧬</div><h3>Biologics &amp; Biosimilars</h3><p>CHO cell expression systems, microbial fermentation, and downstream purification for complex biologics.</p><div class="tech-products"><span>IMMUAXIS® (ustekinumab biosimilar)</span><span>50,000L bioreactor capacity Singapore</span><span>4 biosimilar programs in development</span></div></div>
+      <div class="tech-card"><div class="tech-icon" style="background:var(--clc);">🫁</div><h3>Inhalation Technology</h3><p>DPI, MDI, nasal spray, and soft-mist inhaler platforms with proprietary particle engineering for optimal lung deposition.</p><div class="tech-products"><span>BREATHAXIS® Trio (pMDI)</span><span>RESPAXIS® DPI (dry powder)</span><span>Cyclone particle engineering tech</span></div></div>
+      <div class="tech-card"><div class="tech-icon" style="background:#fdf4ff;">🩹</div><h3>Transdermal Drug Delivery</h3><p>Reservoir and matrix patch systems for 24–72hr delivery of hormones, analgesics, and cardiovascular agents.</p><div class="tech-products"><span>Cardiovascular patch platform</span><span>CNS weekly transdermal program</span><span>Microneedle TDD in preclinical</span></div></div>
+      <div class="tech-card"><div class="tech-icon" style="background:#fffbeb;">🔬</div><h3>Novel Drug Delivery</h3><p>Liposomal encapsulation, lipid nanoparticles (LNP), and polymer-based systems for oncology and gene therapy.</p><div class="tech-products"><span>LNP platform for mRNA therapeutics</span><span>Liposomal oncology formulations</span><span>PLGA microsphere injectable depot</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY COMPLIANCE -->
+<section class="section" data-drupal="Paragraph: quality_compliance | NEW COMPONENT">
+  <div class="container">
+    <div class="quality-grid">
+      <div>
+        <div class="eyebrow">Paragraph: quality_compliance</div>
+        <h2 class="section-title">Uncompromising <em>Quality Standards</em></h2>
+        <p class="section-desc">Our quality management system is built on the principle that every patient deserves medicines manufactured to the highest standard — without exception.</p>
+        <div class="quality-pillars">
+          <div class="quality-pillar"><div class="qp-icon">🎯</div><div><div class="qp-title">Quality by Design (QbD)</div><div class="qp-desc">All new products developed using ICH Q8/Q9/Q10 QbD principles — building quality in, not testing it in.</div></div></div>
+          <div class="quality-pillar"><div class="qp-icon">🏭</div><div><div class="qp-title">Zero-Defect Manufacturing</div><div class="qp-desc">Six Sigma / Lean manufacturing across all sites. Zero Critical OAIs from any regulatory agency since 2019.</div></div></div>
+          <div class="quality-pillar"><div class="qp-icon">⚡</div><div><div class="qp-title">Real-Time Release Testing</div><div class="qp-desc">RTRT implemented at 8 facilities — reducing batch release time from 14 days to 48 hours.</div></div></div>
+        </div>
+        <a href="#" class="btn btn-corp btn-lg">Quality Policy Document →</a>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--cs);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Regulatory Compliance Status — Key Markets</div>
+        <table class="compliance-table">
+          <thead><tr><th>Regulatory Body</th><th>Market</th><th>Status</th><th>Last Inspection</th></tr></thead>
+          <tbody>
+            <tr><td>US FDA</td><td>USA / Global</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Mar 2026</td></tr>
+            <tr><td>EMA / CHMP</td><td>European Union</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Jan 2026</td></tr>
+            <tr><td>WHO Prequalification</td><td>Global</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Nov 2025</td></tr>
+            <tr><td>CDSCO</td><td>India</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Feb 2026</td></tr>
+            <tr><td>PMDA</td><td>Japan</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Sep 2025</td></tr>
+            <tr><td>Health Canada</td><td>Canada</td><td><span class="status-badge status-compliant">Compliant</span></td><td>Dec 2025</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- API DEV SERVICES (dark) -->
+<section class="api-section" data-drupal="CT: development_service | View: development_services / service_cards | NEW">
+  <div class="container">
+    <div class="api-grid">
+      <div>
+        <div class="eyebrow" style="color:var(--cc);">CT: development_service</div>
+        <h2 class="section-title white">Integrated API &amp; Formulation <em style="color:var(--cc);">Development</em></h2>
+        <p style="color:var(--cs);font-size:15px;line-height:1.75;margin-bottom:18px;">End-to-end development capabilities from discovery chemistry to commercial-scale manufacturing — enabling faster development timelines for our own pipeline and our partners.</p>
+        <div class="api-stats">
+          <div class="api-stat"><div class="api-stat-num">8</div><div class="api-stat-lbl">API Manufacturing Sites globally</div></div>
+          <div class="api-stat"><div class="api-stat-num">200+</div><div class="api-stat-lbl">APIs in commercial portfolio</div></div>
+          <div class="api-stat"><div class="api-stat-num">40+</div><div class="api-stat-lbl">Novel formulations in development</div></div>
+          <div class="api-stat"><div class="api-stat-num">18 mo</div><div class="api-stat-lbl">Average Phase I to IND timeline</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="api-service-grid">
+          <div class="api-service-card"><div class="asc-icon">⚗️</div><div class="asc-title">API Synthesis</div><ul class="asc-list"><li>Route scouting &amp; optimization</li><li>Process chemistry scale-up</li><li>HPAPI handling (OEB5)</li><li>Green chemistry initiatives</li></ul></div>
+          <div class="api-service-card"><div class="asc-icon">🔬</div><div class="asc-title">Process Development</div><ul class="asc-list"><li>DoE-driven optimization</li><li>ICH Q8 design space</li><li>PAT integration</li><li>GMP batch manufacturing</li></ul></div>
+          <div class="api-service-card"><div class="asc-icon">💊</div><div class="asc-title">Formulation R&amp;D</div><ul class="asc-list"><li>Pre-formulation studies</li><li>Excipient compatibility</li><li>Stability (ICH zones)</li><li>Biopharmaceutics (BCS)</li></ul></div>
+          <div class="api-service-card"><div class="asc-icon">🚀</div><div class="asc-title">Scale-up &amp; Tech Transfer</div><ul class="asc-list"><li>Clinical to commercial scale-up</li><li>Site-to-site tech transfer</li><li>Validation (PV, CSV, CSV)</li><li>Regulatory filing support</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLY CHAIN -->
+<section class="section section-alt" data-drupal="Block/Paragraph: supply_chain_block | NEW COMPONENT">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="eyebrow" style="justify-content:center;">supply_chain_block</div>
+      <h2 class="section-title" style="text-align:center;">Global Supply Chain <em>Excellence</em></h2>
+      <p class="section-desc center">From raw material sourcing to last-mile patient delivery — a fully integrated, resilient, and sustainable supply chain serving 80+ markets.</p>
+    </div>
+    <div class="sc-flow">
+      <div class="sc-stage">
+        <div class="sc-circle">📦</div>
+        <div class="sc-num">Stage 1</div>
+        <h4>Raw Material Sourcing</h4>
+        <p>35+ countries of origin. 500+ approved vendors. Dual-sourcing for all critical APIs. Conflict mineral-free procurement policy.</p>
+        <div class="sc-metric">500+ Approved Vendors</div>
+      </div>
+      <div class="sc-stage">
+        <div class="sc-circle">🏭</div>
+        <div class="sc-num">Stage 2</div>
+        <h4>Manufacturing &amp; QC</h4>
+        <p>12 GMP facilities. Real-time batch release in 48 hrs. Integrated ERP across all sites. 100% serialization for US/EU/India markets.</p>
+        <div class="sc-metric">48-Hour Batch Release</div>
+      </div>
+      <div class="sc-stage">
+        <div class="sc-circle">🌍</div>
+        <div class="sc-num">Stage 3</div>
+        <h4>Distribution &amp; Logistics</h4>
+        <p>80+ distribution centers. GDP-certified cold chain for biologics (2–8°C). Real-time track &amp; trace across 35 direct markets.</p>
+        <div class="sc-metric">80+ Distribution Centers</div>
+      </div>
+    </div>
+    <div class="sc-kpis">
+      <div class="sc-kpi"><div class="num">99.2%</div><div class="lbl">On-Time Delivery Rate</div></div>
+      <div class="sc-kpi"><div class="num">Zero</div><div class="lbl">Medicine Shortages (2025)</div></div>
+      <div class="sc-kpi"><div class="num">48 hrs</div><div class="lbl">Order-to-Ship Time</div></div>
+      <div class="sc-kpi"><div class="num">100%</div><div class="lbl">Serialization Compliance</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGULATORY TRACKER -->
+<section class="section" data-drupal="CT: regulatory_submission | View: regulatory_submissions / table_display | NEW CT">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0;">
+      <div><div class="eyebrow">CT: regulatory_submission</div><h2 class="section-title">Regulatory <em>Submissions Pipeline</em></h2></div>
+      <a href="#" class="btn btn-outline-corp">View All Submissions →</a>
+    </div>
+    <table class="reg-table">
+      <thead><tr><th>Product Name</th><th>Target Market</th><th>Submission Type</th><th>Status</th><th>Submission Date</th><th>Expected Decision</th></tr></thead>
+      <tbody>
+        <tr><td class="prod-name-cell">AXICELL® 200mg (2nd line)</td><td>USA</td><td><span class="sub-type st-nda">sNDA</span></td><td><span class="reg-status rs-submitted" style="background:#dcfce7;color:#15803d;">● Approved</span></td><td>Mar 2025</td><td><strong style="color:#15803d;">Approved May 2026</strong></td></tr>
+        <tr><td class="prod-name-cell">AXP-8821 (ALK+ NSCLC)</td><td>USA</td><td><span class="sub-type st-nda">NDA</span></td><td><span class="reg-status" style="background:#dbeafe;color:#1d4ed8;">● Under Review</span></td><td>Jan 2026</td><td>Q4 2026</td></tr>
+        <tr><td class="prod-name-cell">CARDIAXIS® HR (new indication)</td><td>EU</td><td><span class="sub-type st-maa">MAA</span></td><td><span class="reg-status" style="background:#dbeafe;color:#1d4ed8;">● Under Review</span></td><td>Nov 2025</td><td>Q3 2026</td></tr>
+        <tr><td class="prod-name-cell">IMMUAXIS® Crohn's (SC)</td><td>USA/EU</td><td><span class="sub-type st-nda">sBLA</span></td><td><span class="reg-status" style="background:#fff7ed;color:#b45309;">● Submitted</span></td><td>Apr 2026</td><td>Q1 2027</td></tr>
+        <tr><td class="prod-name-cell">RAREAXIS® Type III (new)</td><td>USA/EU</td><td><span class="sub-type st-nda">NDA/MAA</span></td><td><span class="reg-status" style="background:#fff7ed;color:#b45309;">● Submitted</span></td><td>May 2026</td><td>Q2 2027</td></tr>
+        <tr><td class="prod-name-cell">NEUROAXIS® Alzheimer's</td><td>USA</td><td><span class="sub-type st-nda">NDA</span></td><td><span class="reg-status" style="background:#f3f4f6;color:#6b778c;">● Pre-filing Review</span></td><td>Sep 2026 (est)</td><td>Q3 2027</td></tr>
+        <tr><td class="prod-name-cell">AXP-4419 (ANDA Generic)</td><td>USA</td><td><span class="sub-type st-anda">ANDA</span></td><td><span class="reg-status" style="background:#dcfce7;color:#15803d;">● Approved</span></td><td>Jun 2024</td><td><strong style="color:#15803d;">Approved Jan 2026</strong></td></tr>
+        <tr><td class="prod-name-cell">BREATHAXIS® Quad (new)</td><td>EU</td><td><span class="sub-type st-maa">MAA</span></td><td><span class="reg-status" style="background:#fff7ed;color:#b45309;">● Submitted</span></td><td>Mar 2026</td><td>Q1 2027</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PARTNER CTA -->
+<section class="partner-cta" data-drupal="Paragraph: corp_partner_cta | NEW COMPONENT">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="eyebrow" style="justify-content:center;">field_eyebrow: Business Development</div>
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:12px;">Partner for <em style="color:var(--cc);">Manufacturing Excellence</em></h2>
+    <p style="color:var(--cs);font-size:16px;max-width:560px;margin:0 auto;line-height:1.75;">Leverage AxisPharma's world-class manufacturing infrastructure, quality systems, and regulatory expertise for your product programs.</p>
+    <div class="partner-options">
+      <div class="partner-option"><div class="po-icon">🏭</div><div class="po-title">Toll Manufacturing</div><div class="po-desc">End-to-end contract manufacturing for API, formulation, and packaging across all major dosage forms.</div></div>
+      <div class="partner-option"><div class="po-icon">⚗️</div><div class="po-title">API Supply</div><div class="po-desc">Reliable long-term supply of 200+ APIs with full regulatory support for US, EU, and global filings.</div></div>
+      <div class="partner-option"><div class="po-icon">🤝</div><div class="po-title">Co-development</div><div class="po-desc">Joint development programs from formulation through commercialization — sharing investment and expertise.</div></div>
+    </div>
+    <div class="partner-cta-buttons">
+      <a href="#" class="btn btn-corp btn-lg">Contact Business Development →</a>
+      <a href="#" class="btn btn-outline-corp btn-lg" style="border-color:rgba(255,255,255,.3);color:#fff;">📄 Download Capabilities Deck</a>
+    </div>
+  </div>
+</section>
+
+<!-- REUSED: CERTIFICATIONS -->
+<div class="certs-band" data-drupal="Paragraph: certifications_band | REUSED from Page 1">
+  <div class="container">
+    <div class="certs-label">Certifications &amp; Industry Affiliations</div>
+    <div class="certs-row">
+      <div class="cert-item"><span>🌐</span> WHO Pre-Qualified</div>
+      <div class="cert-item"><span>🇺🇸</span> FDA Approved</div>
+      <div class="cert-item"><span>🇪🇺</span> EMA Authorized</div>
+      <div class="cert-item"><span>⚗️</span> GMP Certified</div>
+      <div class="cert-item"><span>📋</span> ISO 9001:2015</div>
+      <div class="cert-item"><span>🏛</span> ICH Q10</div>
+      <div class="cert-item"><span>🤝</span> IFPMA Member</div>
+      <div class="cert-item"><span>💊</span> PhRMA Member</div>
+    </div>
+  </div>
+</div>
+
+<!-- REUSED: FOOTER -->
+<footer class="site-footer" data-drupal="Region: footer | REUSED">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="pharma-theme-3-axispharma.html" class="logo" style="display:flex;margin-bottom:14px;">
+          <div class="logo-mark">🏛</div>
+          <div class="logo-text"><strong>AxisPharma</strong><span>Science. Scale. Impact.</span></div>
+        </a>
+        <p>A century of pharmaceutical innovation — headquartered in New York, operating in 80+ countries.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social">in</a><a href="#" class="footer-social">𝕏</a>
+          <a href="#" class="footer-social">f</a><a href="#" class="footer-social">▶</a>
+        </div>
+        <div class="footer-stock">
+          <div><div class="sym">NYSE: AXP</div><div style="font-size:10px;color:var(--cs);">Real-time quote</div></div>
+          <div><div class="price">$124.50</div><div class="chg">▲ +2.3%</div></div>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Products</h5><ul><li><a href="pharma-theme-3-axispharma-p2.html">Full Portfolio</a></li><li><a href="#">Oncology</a></li><li><a href="#">Cardiovascular</a></li><li><a href="#">Neurology</a></li><li><a href="#">Rare &amp; Genetic</a></li></ul></div>
+      <div class="footer-col"><h5>Manufacturing</h5><ul><li><a href="pharma-theme-3-axispharma-p2.html">Global Sites</a></li><li><a href="#">Tech Platforms</a></li><li><a href="#">Quality Systems</a></li><li><a href="#">API Supply</a></li><li><a href="#">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h5>Investors</h5><ul><li><a href="#">Financial Results</a></li><li><a href="#">Annual Report</a></li><li><a href="#">SEC Filings</a></li><li><a href="#">Dividend History</a></li><li><a href="#">ESG Report</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="pharma-theme-3-axispharma.html">About AxisPharma</a></li><li><a href="#">Leadership</a></li><li><a href="#">Newsroom</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact Us</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AxisPharma Global Corporation. All rights reserved. NYSE: AXP</p>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+  <div class="footer-legal-bar"><p>Forward-looking statements on this page involve risks and uncertainties. Past performance is not indicative of future results. For risk factors, see AxisPharma's Form 10-K filed with the SEC. This page does not constitute investment advice.</p></div>
+</footer>
+
+</body>
+</html>
