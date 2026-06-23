@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Support & Disease Areas — VitaCare</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0d9488;--teal-dark:#0f766e;--teal-lt:#ccfbf1;
+  --green:#16a34a;--green-lt:#dcfce7;
+  --blue:#0284c7;--blue-lt:#e0f2fe;
+  --orange:#ea580c;--white:#ffffff;--off-white:#f8fffe;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-400:#9ca3af;--gray-600:#4b5563;--gray-900:#111827;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow:0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;font-size:16px;color:var(--gray-900);background:#fff;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+/* Drupal labels */
+[data-drupal]{position:relative;}
+[data-drupal]::before{content:attr(data-drupal);position:absolute;top:0;left:0;background:#0d9488;color:#fff;font-size:9px;font-family:monospace;font-weight:700;padding:2px 8px;border-radius:0 0 6px 0;z-index:99;pointer-events:none;white-space:nowrap;}
+
+/* ── ALERT BAR ── */
+.alert-bar{background:linear-gradient(90deg,var(--teal-dark),var(--teal));color:#fff;padding:11px 0;font-size:13.5px;text-align:center;position:relative;}
+.alert-bar .container{display:flex;justify-content:center;align-items:center;gap:12px;}
+.alert-bar a{color:var(--teal-lt);font-weight:600;text-decoration:underline;}
+.alert-bar .dismiss{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;}
+
+/* ── HEADER ── */
+.site-header{background:#fff;box-shadow:0 1px 0 var(--gray-200),var(--shadow-sm);position:sticky;top:0;z-index:1000;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,var(--teal),var(--green));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-text strong{display:block;font-size:21px;font-weight:900;color:var(--gray-900);letter-spacing:-.5px;}
+.logo-text span{font-size:11px;color:var(--teal);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;}
+.main-nav{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
+.nav-item{position:relative;}
+.main-nav a{display:flex;align-items:center;gap:4px;padding:9px 14px;font-size:14px;font-weight:500;color:var(--gray-600);border-radius:8px;transition:all .2s;white-space:nowrap;}
+.main-nav a:hover,.main-nav a.active{color:var(--teal);background:var(--teal-lt);}
+.main-nav .has-dd>a::after{content:'▾';font-size:10px;opacity:.5;}
+.dropdown-simple{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--gray-200);border-radius:12px;min-width:200px;padding:8px;box-shadow:var(--shadow-lg);display:none;}
+.nav-item:hover .dropdown-simple{display:block;}
+.dropdown-simple a{display:block;padding:9px 14px;font-size:13.5px;border-radius:8px;color:var(--gray-600);}
+.dropdown-simple a:hover{background:var(--teal-lt);color:var(--teal);}
+.mega-menu{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--gray-200);border-radius:16px;min-width:520px;padding:20px;box-shadow:var(--shadow-lg);display:none;}
+.nav-item:hover .mega-menu{display:block;}
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mega-item{display:flex;gap:12px;padding:10px;border-radius:10px;transition:background .2s;cursor:pointer;}
+.mega-item:hover{background:var(--gray-50);}
+.mega-item-icon{width:38px;height:38px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.mega-item-text strong{display:block;font-size:13px;font-weight:600;color:var(--gray-900);}
+.mega-item-text span{font-size:12px;color:var(--gray-400);}
+.header-right{display:flex;align-items:center;gap:10px;}
+.search-btn{width:38px;height:38px;border-radius:8px;border:1.5px solid var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:16px;cursor:pointer;transition:all .2s;}
+.search-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt);}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;border:none;}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:var(--teal-dark);box-shadow:0 4px 16px rgba(13,148,136,.3);}
+.btn-outline{border:1.5px solid var(--gray-200);color:var(--gray-600);background:#fff;}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:#15803d;}
+.btn-lg{padding:14px 30px;font-size:15px;border-radius:12px;}
+
+/* ── SECTIONS ── */
+.section{padding:80px 0;}
+.section-alt{background:var(--gray-50);}
+.section-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;position:relative;}
+.section-eyebrow::before,.section-eyebrow::after{content:'';position:absolute;top:50%;width:28px;height:1.5px;background:var(--teal);}
+.section-eyebrow::before{right:calc(100% + 10px);}
+.section-eyebrow::after{left:calc(100% + 10px);}
+.section-header{text-align:center;margin-bottom:50px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:40px;font-weight:700;color:var(--gray-900);line-height:1.2;margin-bottom:14px;}
+.section-title em{font-style:italic;color:var(--teal);}
+.section-desc{font-size:16px;color:var(--gray-600);max-width:560px;margin:0 auto;line-height:1.75;}
+
+/* ══════════════════════════════════════════════════
+   INNER PAGE HERO (NEW COMPONENT)
+   Paragraph: inner_page_hero_light
+   ══════════════════════════════════════════════════ */
+.inner-hero{background:linear-gradient(135deg,var(--off-white) 0%,var(--teal-lt) 60%,#a7f3d0 100%);padding:60px 0 50px;position:relative;overflow:hidden;}
+.inner-hero::before{content:'';position:absolute;right:-120px;top:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(13,148,136,.12) 0%,transparent 70%);pointer-events:none;}
+.inner-hero::after{content:'';position:absolute;left:-80px;bottom:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(22,163,74,.1) 0%,transparent 70%);pointer-events:none;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray-600);margin-bottom:20px;position:relative;z-index:1;}
+.breadcrumb a{color:var(--teal);font-weight:500;}
+.breadcrumb a:hover{text-decoration:underline;}
+.breadcrumb .sep{color:var(--gray-400);}
+.breadcrumb .current{color:var(--gray-900);font-weight:600;}
+.inner-hero h1{font-family:'DM Serif Display',serif;font-size:46px;line-height:1.15;color:var(--gray-900);margin-bottom:16px;position:relative;z-index:1;}
+.inner-hero h1 em{font-style:italic;color:var(--teal);}
+.inner-hero-desc{font-size:16.5px;color:var(--gray-600);max-width:580px;line-height:1.75;margin-bottom:28px;position:relative;z-index:1;}
+.trust-pills{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1;}
+.trust-pill{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--teal-lt);border-radius:24px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--gray-900);box-shadow:var(--shadow-sm);}
+.trust-pill .tp-icon{font-size:16px;}
+
+/* ══════════════════════════════════════════════════
+   CONDITION SEARCH & FILTER (NEW COMPONENT)
+   Block: condition_search
+   View: condition_search_index
+   ══════════════════════════════════════════════════ */
+.search-section{padding:52px 0;background:#fff;border-bottom:1px solid var(--gray-200);}
+.search-box-wrap{max-width:680px;margin:0 auto 28px;}
+.search-box{display:flex;align-items:center;background:#fff;border:2px solid var(--gray-200);border-radius:14px;padding:6px 8px 6px 20px;box-shadow:var(--shadow);transition:border-color .2s;}
+.search-box:focus-within{border-color:var(--teal);}
+.search-box input{flex:1;border:none;outline:none;font-size:15px;color:var(--gray-900);font-family:'Inter',sans-serif;background:transparent;}
+.search-box input::placeholder{color:var(--gray-400);}
+.search-box button{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.search-box button:hover{background:var(--teal-dark);}
+.filter-chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.filter-chip{padding:8px 18px;border-radius:24px;font-size:13px;font-weight:600;border:1.5px solid var(--gray-200);color:var(--gray-600);background:#fff;cursor:pointer;transition:all .2s;}
+.filter-chip:hover,.filter-chip.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+
+/* ══════════════════════════════════════════════════
+   TREATMENT JOURNEY TIMELINE (NEW COMPONENT)
+   Paragraph: treatment_journey_timeline
+   ══════════════════════════════════════════════════ */
+.timeline-section{padding:80px 0;background:var(--gray-50);}
+.timeline-track{position:relative;margin-top:50px;}
+.timeline-line{position:absolute;top:36px;left:10%;right:10%;height:3px;background:linear-gradient(90deg,var(--teal-lt),var(--teal),var(--teal-lt));z-index:0;border-radius:2px;}
+.timeline-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;z-index:1;}
+.timeline-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;}
+.ts-circle{width:72px;height:72px;border-radius:50%;border:3px solid var(--teal);background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;box-shadow:0 0 0 6px rgba(13,148,136,.1);position:relative;z-index:1;}
+.ts-circle.active{background:var(--teal);}
+.ts-circle.active .ts-step-num{color:#fff;}
+.ts-num{position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:var(--gold,#c9a227);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;background:var(--teal-dark);}
+.ts-title{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:8px;}
+.ts-desc{font-size:12px;color:var(--gray-600);line-height:1.6;margin-bottom:12px;}
+.ts-link{font-size:12px;font-weight:600;color:var(--teal);display:flex;align-items:center;justify-content:center;gap:4px;}
+
+/* ══════════════════════════════════════════════════
+   FAQ ACCORDION (NEW COMPONENT)
+   CT: faq_item | Paragraph: faq_accordion
+   Taxonomy: faq_category
+   ══════════════════════════════════════════════════ */
+.faq-section{padding:80px 0;}
+.faq-layout{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:start;}
+.faq-categories{position:sticky;top:90px;}
+.faq-categories h3{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;}
+.faq-cat-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.faq-cat-list li a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:13.5px;color:var(--gray-600);font-weight:500;transition:all .2s;}
+.faq-cat-list li a:hover,.faq-cat-list li a.active{background:var(--teal-lt);color:var(--teal-dark);font-weight:700;}
+.faq-cat-list li a .cat-icon{font-size:16px;}
+.faq-list{display:flex;flex-direction:column;gap:12px;}
+.faq-item{background:#fff;border:1.5px solid var(--gray-200);border-radius:14px;overflow:hidden;transition:border-color .2s;}
+.faq-item:hover{border-color:var(--teal);}
+.faq-item.open{border-color:var(--teal);box-shadow:var(--shadow);}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px;}
+.faq-q-text{font-size:15px;font-weight:600;color:var(--gray-900);line-height:1.4;}
+.faq-toggle{width:30px;height:30px;border-radius:8px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:300;color:var(--teal);flex-shrink:0;transition:all .2s;}
+.faq-item.open .faq-toggle{background:var(--teal);color:#fff;transform:rotate(45deg);}
+.faq-answer{padding:0 22px 20px;font-size:14px;color:var(--gray-600);line-height:1.75;display:none;}
+.faq-item.open .faq-answer{display:block;}
+.faq-answer a{color:var(--teal);font-weight:600;}
+
+/* ══════════════════════════════════════════════════
+   PATIENT STORIES (NEW LAYOUT — long-form cards)
+   CT: patient_story | View: patient_stories
+   ══════════════════════════════════════════════════ */
+.stories-section{padding:80px 0;background:var(--gray-50);}
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+.story-card{background:#fff;border-radius:16px;overflow:hidden;border:1.5px solid var(--gray-200);transition:all .3s;}
+.story-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--teal);}
+.story-top{padding:24px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid var(--gray-100);}
+.story-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0;}
+.story-meta{}
+.story-name{font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:4px;}
+.story-condition-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.story-location{font-size:12px;color:var(--gray-400);}
+.story-body{padding:20px 24px;}
+.story-quote{font-size:13.5px;color:var(--gray-700);line-height:1.75;font-style:italic;margin-bottom:16px;position:relative;padding-left:16px;border-left:3px solid var(--teal);}
+.story-title{font-size:15px;font-weight:700;color:var(--gray-900);margin-bottom:10px;}
+.story-excerpt{font-size:13px;color:var(--gray-600);line-height:1.65;margin-bottom:16px;}
+.story-read-more{font-size:13px;font-weight:600;color:var(--teal);display:flex;align-items:center;gap:5px;padding-top:14px;border-top:1px solid var(--gray-100);}
+.story-read-more:hover{gap:10px;}
+
+/* ══════════════════════════════════════════════════
+   FIND A SPECIALIST (NEW COMPONENT)
+   Block: specialist_finder | CT: specialist
+   ══════════════════════════════════════════════════ */
+.specialist-section{padding:80px 0;}
+.specialist-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:center;}
+.spec-content{}
+.spec-content h2{font-family:'DM Serif Display',serif;font-size:38px;color:var(--gray-900);margin-bottom:14px;line-height:1.2;}
+.spec-content h2 em{font-style:italic;color:var(--teal);}
+.spec-content p{font-size:15px;color:var(--gray-600);line-height:1.75;margin-bottom:24px;}
+.spec-types{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.spec-type-btn{padding:8px 16px;border-radius:24px;font-size:13px;font-weight:600;border:1.5px solid var(--gray-200);color:var(--gray-600);background:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;}
+.spec-type-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt);}
+.spec-type-btn .spec-icon{font-size:15px;}
+.spec-finder-card{background:linear-gradient(135deg,var(--teal-lt) 0%,#a7f3d0 100%);border-radius:20px;padding:32px;position:relative;overflow:hidden;}
+.spec-finder-card::before{content:'📍';position:absolute;right:-10px;top:-10px;font-size:100px;opacity:.1;}
+.spec-finder-card h3{font-size:18px;font-weight:800;color:var(--teal-dark);margin-bottom:6px;}
+.spec-finder-card p{font-size:13.5px;color:var(--teal-dark);opacity:.8;margin-bottom:24px;}
+.finder-form{display:flex;flex-direction:column;gap:12px;}
+.finder-field{display:flex;flex-direction:column;gap:5px;}
+.finder-field label{font-size:12px;font-weight:700;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.5px;}
+.finder-field select,.finder-field input{padding:12px 16px;border-radius:10px;border:1.5px solid rgba(13,148,136,.25);font-size:14px;color:var(--gray-900);background:#fff;font-family:'Inter',sans-serif;outline:none;}
+.finder-field select:focus,.finder-field input:focus{border-color:var(--teal);}
+.finder-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* ══════════════════════════════════════════════════
+   SERVICES ICON GRID (REUSED COMPONENT)
+   Paragraph: services_icon_grid | CT: service_item
+   ══════════════════════════════════════════════════ */
+.service-card{background:#fff;border-radius:16px;padding:28px 22px;text-align:center;border:1.5px solid var(--gray-200);transition:all .3s;cursor:pointer;}
+.service-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 10px 28px rgba(13,148,136,.1);}
+.service-icon{width:66px;height:66px;border-radius:18px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.service-card h3{font-size:15px;font-weight:700;color:var(--gray-900);margin-bottom:8px;}
+.service-card p{font-size:13px;color:var(--gray-600);line-height:1.65;margin-bottom:14px;}
+.service-link{font-size:13px;font-weight:600;color:var(--teal);display:flex;align-items:center;justify-content:center;gap:5px;}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+
+/* ══════════════════════════════════════════════════
+   DOWNLOADABLE PATIENT RESOURCES (NEW COMPONENT)
+   CT: patient_resource | View: patient_resources_library
+   ══════════════════════════════════════════════════ */
+.resources-section{padding:80px 0;background:var(--gray-50);}
+.resources-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
+.resource-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:14px;padding:20px;transition:all .2s;cursor:pointer;}
+.resource-card:hover{border-color:var(--teal);box-shadow:var(--shadow);}
+.rc-type-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.rct-pdf{background:#fee2e2;color:#991b1b;}
+.rct-video{background:#dbeafe;color:#1e40af;}
+.rct-infographic{background:#fef3c7;color:#92400e;}
+.rct-guide{background:var(--green-lt);color:var(--green);}
+.resource-card h4{font-size:14px;font-weight:700;color:var(--gray-900);line-height:1.4;margin-bottom:8px;}
+.resource-card p{font-size:12px;color:var(--gray-400);margin-bottom:12px;line-height:1.5;}
+.rc-langs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.rc-lang-pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--gray-100);color:var(--gray-600);}
+.rc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--gray-100);}
+.rc-size{font-size:11px;color:var(--gray-400);}
+.rc-dl-btn{background:var(--teal);color:#fff;border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:background .2s;}
+.rc-dl-btn:hover{background:var(--teal-dark);}
+
+/* ══════════════════════════════════════════════════
+   VIDEO EDUCATION GALLERY (NEW COMPONENT)
+   CT: educational_video | View: video_gallery
+   Paragraph: video_gallery_block
+   ══════════════════════════════════════════════════ */
+.video-section{padding:80px 0;}
+.video-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;}
+.video-card{border-radius:14px;overflow:hidden;border:1.5px solid var(--gray-200);cursor:pointer;transition:all .3s;}
+.video-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--teal);}
+.video-thumb{position:relative;height:160px;display:flex;align-items:center;justify-content:center;}
+.video-play{position:absolute;width:52px;height:52px;background:rgba(255,255,255,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:transform .2s;}
+.video-card:hover .video-play{transform:scale(1.1);}
+.video-play::after{content:'▶';color:var(--teal);font-size:18px;margin-left:4px;}
+.video-duration{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.7);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;}
+.video-cat-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;text-transform:uppercase;}
+.video-body{padding:16px;}
+.video-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.video-views{font-size:11px;color:var(--gray-400);}
+.video-card h4{font-size:13.5px;font-weight:700;color:var(--gray-900);line-height:1.4;}
+
+/* ══════════════════════════════════════════════════
+   MEDICATION SAFETY TIPS (NEW COMPONENT)
+   Paragraph: medication_safety_tips
+   ══════════════════════════════════════════════════ */
+.safety-section{padding:80px 0;background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal) 60%,#0f9488 100%);position:relative;overflow:hidden;}
+.safety-section::before{content:'';position:absolute;right:-80px;top:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);}
+.safety-section .section-title{color:#fff;}
+.safety-section .section-eyebrow{color:rgba(255,255,255,.7);}
+.safety-section .section-eyebrow::before,.safety-section .section-eyebrow::after{background:rgba(255,255,255,.4);}
+.safety-section .section-desc{color:rgba(255,255,255,.75);}
+.safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;position:relative;z-index:1;}
+.safety-card{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:26px;transition:all .3s;}
+.safety-card:hover{background:rgba(255,255,255,.18);}
+.safety-card-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px;}
+.safety-icon{width:52px;height:52px;background:rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.safety-card h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;}
+.safety-card-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.5px;}
+.safety-card p{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:14px;}
+.safety-tip-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.safety-tip-list li{font-size:13px;color:rgba(255,255,255,.7);display:flex;gap:8px;align-items:flex-start;}
+.safety-tip-list li::before{content:'→';color:rgba(255,255,255,.5);flex-shrink:0;}
+
+/* ══════════════════════════════════════════════════
+   NEWSLETTER (REUSED)
+   ══════════════════════════════════════════════════ */
+.newsletter-section{padding:70px 0;background:linear-gradient(135deg,var(--teal-lt) 0%,#e0fdf4 100%);border-top:2px solid var(--teal-lt);}
+.newsletter-inner{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.newsletter-text h2{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gray-900);margin-bottom:8px;}
+.newsletter-text p{font-size:15px;color:var(--gray-600);}
+.newsletter-form{display:flex;gap:10px;min-width:380px;}
+.newsletter-form input{flex:1;padding:14px 18px;border-radius:10px;border:1.5px solid var(--gray-200);font-size:14px;background:#fff;font-family:'Inter',sans-serif;outline:none;}
+.newsletter-form input:focus{border-color:var(--teal);}
+
+/* ══════════════════════════════════════════════════
+   CTA SECTION (REUSED)
+   Paragraph: cta_banner
+   ══════════════════════════════════════════════════ */
+.cta-vitacare{padding:80px 0;background:#fff;text-align:center;border-top:1px solid var(--gray-200);}
+.cta-vitacare h2{font-family:'DM Serif Display',serif;font-size:42px;color:var(--gray-900);margin-bottom:14px;}
+.cta-vitacare h2 em{font-style:italic;color:var(--teal);}
+.cta-vitacare p{font-size:16px;color:var(--gray-600);max-width:520px;margin:0 auto 36px;line-height:1.75;}
+.cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:760px;margin:0 auto 40px;}
+.cta-option{background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;}
+.cta-option:hover{border-color:var(--teal);background:var(--teal-lt);}
+.cta-option .co-icon{font-size:28px;margin-bottom:10px;}
+.cta-option h4{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:5px;}
+.cta-option p{font-size:12px;color:var(--gray-500);}
+
+/* ══════════════════════════════════════════════════
+   FOOTER (REUSED)
+   ══════════════════════════════════════════════════ */
+.site-footer{background:var(--gray-900);padding:70px 0 0;}
+.footer-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:44px;margin-bottom:50px;}
+.footer-logo-mark{width:44px;height:44px;background:linear-gradient(135deg,var(--teal),var(--green));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.footer-logo strong{font-size:20px;font-weight:900;color:#fff;}
+.footer-logo span{font-size:11px;color:var(--teal);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;}
+.footer-about p{font-size:13.5px;color:#6b7280;line-height:1.75;margin-bottom:20px;}
+.footer-socials{display:flex;gap:8px;margin-bottom:20px;}
+.footer-social-btn{width:36px;height:36px;background:#1f2937;border:1px solid #374151;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:13px;transition:all .2s;}
+.footer-social-btn:hover{background:var(--teal);border-color:var(--teal);color:#fff;}
+.footer-cert{display:flex;gap:8px;flex-wrap:wrap;}
+.cert-badge{background:#1f2937;border:1px solid #374151;border-radius:6px;padding:5px 10px;font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.5px;}
+.footer-col h5{font-size:13px;font-weight:700;color:#fff;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid #1f2937;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul li a{font-size:13px;color:#6b7280;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--teal);}
+.footer-emergency{background:#7f1d1d;border:1px solid #b91c1c;border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;margin-top:20px;}
+.footer-emergency .em-icon{font-size:24px;flex-shrink:0;}
+.footer-emergency h4{font-size:13px;font-weight:700;color:#fca5a5;margin-bottom:2px;}
+.footer-emergency p{font-size:12px;color:#f87171;}
+.footer-emergency strong{font-size:17px;color:#fff;font-weight:800;display:block;}
+.footer-divider{border:none;border-top:1px solid #1f2937;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:22px 0;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:12.5px;color:#4b5563;}
+.footer-bottom-links{display:flex;gap:18px;flex-wrap:wrap;}
+.footer-bottom-links a{font-size:12px;color:#4b5563;transition:color .2s;}
+.footer-bottom-links a:hover{color:var(--teal);}
+.footer-disclaimer{background:#111827;padding:16px 0;text-align:center;}
+.footer-disclaimer p{font-size:11px;color:#374151;max-width:900px;margin:0 auto;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  REUSED: Block: global_alert_bar                ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="alert-bar" data-drupal="Block: global_alert_bar | CT: alert_banner | REUSED">
+  <div class="container">
+    <span>💊 <strong>Patient Assistance Program:</strong> Over 180,000 patients received free medicines in 2025 — <a href="#">Apply Now →</a></span>
+    <button class="dismiss">✕</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  REUSED: Block: main_navigation | Region: header║
+     ║  "Patient Care" = active (this page)            ║
+     ╚══════════════════════════════════════════════════╝ -->
+<header class="site-header" data-drupal="Block: main_navigation | Region: header | REUSED">
+  <div class="container">
+    <div class="header-inner">
+      <a href="pharma-theme-2-vitacare.html" class="logo">
+        <div class="logo-mark">💊</div>
+        <div class="logo-text"><strong>VitaCare</strong><span>Care Beyond Cure</span></div>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-item"><a href="pharma-theme-2-vitacare.html">Home</a></div>
+        <div class="nav-item has-dd">
+          <a href="#">Our Medicines</a>
+          <div class="mega-menu">
+            <div class="mega-grid">
+              <div class="mega-item"><div class="mega-item-icon" style="background:#ffe4e6;">💊</div><div class="mega-item-text"><strong>Cardiovascular</strong><span>Heart &amp; blood pressure</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#dbeafe;">🫁</div><div class="mega-item-text"><strong>Respiratory</strong><span>Asthma, COPD, allergies</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#dcfce7;">🌿</div><div class="mega-item-text"><strong>Metabolic / Diabetes</strong><span>Insulin, oral antidiabetics</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#fef3c7;">🦴</div><div class="mega-item-text"><strong>Bone &amp; Joint</strong><span>Osteoporosis, arthritis</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#f3e8ff;">🧠</div><div class="mega-item-text"><strong>Neurology &amp; Mental</strong><span>Depression, anxiety, epilepsy</span></div></div>
+              <div class="mega-item"><div class="mega-item-icon" style="background:#ccfbf1;">🔬</div><div class="mega-item-text"><strong>All Products →</strong><span>Browse full portfolio</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="pharma-theme-2-vitacare-p2.html" class="active">Patient Care</a>
+          <div class="dropdown-simple">
+            <a href="pharma-theme-2-vitacare-p2.html">Patient Assistance Program</a>
+            <a href="pharma-theme-2-vitacare-p2.html">Helplines &amp; Support</a>
+            <a href="pharma-theme-2-vitacare-p2.html">Patient Education</a>
+            <a href="pharma-theme-2-vitacare-p2.html">Disease Information</a>
+            <a href="pharma-theme-2-vitacare-p2.html">FAQ for Patients</a>
+          </div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="#">Healthcare Providers</a>
+          <div class="dropdown-simple">
+            <a href="#">HCP Portal</a><a href="#">Prescribing Information</a>
+            <a href="#">Clinical Resources</a><a href="#">CME Programs</a>
+          </div>
+        </div>
+        <div class="nav-item has-dd">
+          <a href="#">Clinical Trials</a>
+          <div class="dropdown-simple">
+            <a href="#">Open Trials</a><a href="#">Trial Results</a>
+            <a href="#">Enroll as Participant</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="#">Sustainability</a></div>
+        <div class="nav-item has-dd">
+          <a href="#">About</a>
+          <div class="dropdown-simple">
+            <a href="#">Our Story</a><a href="#">Leadership</a>
+            <a href="#">Careers</a><a href="#">Newsroom</a>
+          </div>
+        </div>
+      </nav>
+      <div class="header-right">
+        <button class="search-btn">🔍</button>
+        <a href="#" class="btn btn-outline">HCP Login</a>
+        <a href="#" class="btn btn-teal">Find a Medicine</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: Paragraph: inner_page_hero_light          ║
+     ║  Fields: field_breadcrumb, field_headline,      ║
+     ║  field_subheadline, field_trust_indicators      ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="inner-hero" data-drupal="Paragraph: inner_page_hero_light | NEW COMPONENT">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="pharma-theme-2-vitacare.html">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Patient Support &amp; Disease Areas</span>
+    </nav>
+    <h1>Supporting You Through Every<br><em>Step of Your Health Journey</em></h1>
+    <p class="inner-hero-desc">From understanding your diagnosis to managing long-term treatment, VitaCare's patient support programs, disease information resources, and specialist network are here — every step of the way.</p>
+    <div class="trust-pills">
+      <div class="trust-pill"><span class="tp-icon">❤️</span> 50M+ Patients Served Globally</div>
+      <div class="trust-pill"><span class="tp-icon">📞</span> 24/7 MediHelpline Support</div>
+      <div class="trust-pill"><span class="tp-icon">🌍</span> Programs in 80+ Countries</div>
+      <div class="trust-pill"><span class="tp-icon">💰</span> Free Assistance Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: Block: condition_search                   ║
+     ║  View: condition_search_index                   ║
+     ║  Fields: search_query, taxonomy filter chips    ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="search-section" data-drupal="Block: condition_search | View: condition_search_index | NEW">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:24px;">
+      <p style="font-size:14px;font-weight:700;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase;">Search by Condition, Symptom, or Medicine</p>
+    </div>
+    <div class="search-box-wrap">
+      <div class="search-box">
+        <span style="font-size:18px;margin-right:8px;color:var(--gray-400);">🔍</span>
+        <input type="text" placeholder="e.g. High Blood Pressure, Metformin, Chest Pain...">
+        <button>Search →</button>
+      </div>
+    </div>
+    <div class="filter-chips">
+      <button class="filter-chip active">All Conditions</button>
+      <button class="filter-chip">🫀 Diabetes</button>
+      <button class="filter-chip">❤️ Heart Disease</button>
+      <button class="filter-chip">🫁 Asthma</button>
+      <button class="filter-chip">🎗️ Cancer</button>
+      <button class="filter-chip">🧠 Depression</button>
+      <button class="filter-chip">🦴 Arthritis</button>
+      <button class="filter-chip">🩺 Hypertension</button>
+      <button class="filter-chip">🧬 Rare Diseases</button>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: Paragraph: treatment_journey_timeline     ║
+     ║  Fields: field_steps (ERR → journey_step nodes) ║
+     ║  CT: journey_step — field_icon, field_title,    ║
+     ║  field_description, field_resources_link        ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="timeline-section" data-drupal="Paragraph: treatment_journey_timeline | CT: journey_step | NEW">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">field_eyebrow: Your Health Journey</div>
+      <h2 class="section-title">Your <em>Treatment Journey</em> — Step by Step</h2>
+      <p class="section-desc">Understanding what to expect at each stage of treatment helps you stay informed and in control of your health.</p>
+    </div>
+    <div class="timeline-track">
+      <div class="timeline-line"></div>
+      <div class="timeline-steps">
+        <div class="timeline-step">
+          <div class="ts-circle active" style="background:var(--teal);">
+            <span style="font-size:26px;">🩺</span>
+            <div class="ts-num">1</div>
+          </div>
+          <div class="ts-title">Diagnosis</div>
+          <div class="ts-desc">Understanding your condition and getting the right tests done with your doctor.</div>
+          <a href="#" class="ts-link">Guide →</a>
+        </div>
+        <div class="timeline-step">
+          <div class="ts-circle">
+            <span style="font-size:26px;">📋</span>
+            <div class="ts-num">2</div>
+          </div>
+          <div class="ts-title">Prescription</div>
+          <div class="ts-desc">Working with your doctor to choose the right medicine and understanding your options.</div>
+          <a href="#" class="ts-link">Guide →</a>
+        </div>
+        <div class="timeline-step">
+          <div class="ts-circle">
+            <span style="font-size:26px;">💊</span>
+            <div class="ts-num">3</div>
+          </div>
+          <div class="ts-title">Starting Treatment</div>
+          <div class="ts-desc">How to take your medicine correctly, what to expect in the first weeks.</div>
+          <a href="#" class="ts-link">Guide →</a>
+        </div>
+        <div class="timeline-step">
+          <div class="ts-circle">
+            <span style="font-size:26px;">📊</span>
+            <div class="ts-num">4</div>
+          </div>
+          <div class="ts-title">Monitoring</div>
+          <div class="ts-desc">Regular check-ups, lab tests, and tracking your response to treatment.</div>
+          <a href="#" class="ts-link">Guide →</a>
+        </div>
+        <div class="timeline-step">
+          <div class="ts-circle">
+            <span style="font-size:26px;">🌱</span>
+            <div class="ts-num">5</div>
+          </div>
+          <div class="ts-title">Long-term Management</div>
+          <div class="ts-desc">Lifestyle changes, adherence strategies, and building a sustainable routine.</div>
+          <a href="#" class="ts-link">Guide →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: CT: faq_item | Paragraph: faq_accordion  ║
+     ║  Taxonomy: faq_category                         ║
+     ║  Fields: field_question, field_answer,          ║
+     ║  field_category (tax ref)                       ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="faq-section" data-drupal="CT: faq_item | Paragraph: faq_accordion | Taxonomy: faq_category | NEW">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Taxonomy: faq_category</div>
+      <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+      <p class="section-desc">Answers to the questions patients and caregivers ask most about VitaCare medicines and support programs.</p>
+    </div>
+    <div class="faq-layout">
+      <div class="faq-categories">
+        <h3>Browse by Category</h3>
+        <ul class="faq-cat-list">
+          <li><a href="#" class="active"><span class="cat-icon">💊</span> About Medicines</a></li>
+          <li><a href="#"><span class="cat-icon">💰</span> Patient Assistance</a></li>
+          <li><a href="#"><span class="cat-icon">⚕️</span> Safety &amp; Side Effects</a></li>
+          <li><a href="#"><span class="cat-icon">🤰</span> Pregnancy &amp; Breastfeeding</a></li>
+          <li><a href="#"><span class="cat-icon">📦</span> Storage &amp; Handling</a></li>
+          <li><a href="#"><span class="cat-icon">🔄</span> Switching Medicines</a></li>
+          <li><a href="#"><span class="cat-icon">🌍</span> Travelling with Medicines</a></li>
+        </ul>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-question">
+            <span class="faq-q-text">How do I know if I qualify for the VitaCare Patient Assistance Program?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Eligibility for our Patient Assistance Program is based on household income, insurance status, and the specific medicine prescribed. Generally, patients who are uninsured or underinsured and meet income thresholds (typically &lt;400% of the federal poverty level) may qualify. You can <a href="#">check your eligibility online in 2 minutes</a> or call our helpline at 1800-VITA-PAP. Your doctor can also submit the application on your behalf using our Physician Authorization Form.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">What should I do if I miss a dose of my VitaCare medicine?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">The answer depends on the specific medicine and how close your next scheduled dose is. As a general rule: if you remember within a few hours, take the missed dose. If it's close to the next dose time, skip the missed dose and continue your regular schedule. Never take a double dose to make up for a missed one. For specific guidance, refer to the patient information leaflet in your medicine pack or call our 24/7 MediHelpline at 1800-VITA-007.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">Can I take my VitaCare medicine during pregnancy or while breastfeeding?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">This is an important question that must be answered by your doctor for your specific medicine and situation. Many medicines are contraindicated during pregnancy or lactation while others are considered safe. Do not stop or start any medicine during pregnancy without consulting your healthcare provider. Our Medical Affairs team can provide detailed prescribing information to your doctor upon request.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">How should I store my VitaCare medicines properly?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Storage requirements vary by medicine type. Most tablets and capsules should be stored at room temperature (15–30°C), away from direct sunlight and moisture. Insulin pens and biologics typically require refrigeration (2–8°C). Inhalers should not be frozen or left in hot cars. Check the specific storage instructions on your medicine label or download the patient information leaflet. Our <a href="#">downloadable storage guide</a> covers all VitaCare products.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">What are the most common side effects of VitaCare medicines and when should I be concerned?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Side effects vary by medicine class. Common, manageable effects include nausea (especially in first weeks), mild headache, or slight dizziness. Seek immediate medical attention for: difficulty breathing, severe allergic reaction (hives, swelling of face/throat), chest pain, or sudden vision/speech changes. Report all adverse events to our Pharmacovigilance team at 1800-VITA-ADR. All serious adverse events are documented and reported to regulatory authorities.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">Can I travel internationally with my VitaCare prescription medicines?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Yes, in most countries you can travel with prescribed medicines. Best practices: carry medicines in original packaging with your prescription, get a letter from your doctor on letterhead, check the destination country's regulations (some medicines like certain opioids require advance permits), keep temperature-sensitive medicines in an insulated bag with ice packs. Contact our helpline or email medicalinfo@vitacare.com for a travel letter template.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">My doctor wants to switch me from a branded VitaCare medicine to a generic. Is this safe?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Generic medicines contain the same active ingredient at the same dose and are required to demonstrate bioequivalence to the branded medicine. Switching is generally safe and decided by your doctor based on your health profile. However, for certain medicines like narrow-therapeutic-index drugs (e.g., anticoagulants, thyroid hormones, antiepileptics), your doctor may prefer to keep you on the same formulation for stability. Always discuss any switch with your prescribing doctor.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">How do I report a problem or adverse reaction to a VitaCare medicine?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-answer">Report adverse events through any of these channels: Call our 24/7 Pharmacovigilance Helpline at 1800-VITA-ADR, email pv@vitacare.com, submit online via our <a href="#">Adverse Event Reporting Form</a>, or ask your doctor/pharmacist to report on your behalf. We take all reports seriously and investigate every case. Your report contributes to medicine safety monitoring and patient protection globally.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: CT: patient_story | View: patient_stories ║
+     ║  Fields: field_patient_name, field_condition,   ║
+     ║  field_location, field_quote, field_story_title,║
+     ║  field_story_excerpt, field_avatar_color        ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="stories-section" data-drupal="CT: patient_story | View: patient_stories | NEW COMPONENT">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;">
+      <div>
+        <div class="section-eyebrow" style="display:inline-block;">CT: patient_story</div>
+        <h2 class="section-title" style="text-align:left;margin-bottom:0;">Real <em>Patient Stories</em></h2>
+      </div>
+      <a href="#" class="btn btn-outline">All Stories →</a>
+    </div>
+    <div class="stories-grid">
+      <div class="story-card">
+        <div class="story-top">
+          <div class="story-avatar" style="background:linear-gradient(135deg,var(--teal),var(--green));width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0;">RK</div>
+          <div class="story-meta">
+            <div class="story-name">Ramesh Kumar, 58</div>
+            <div class="story-condition-tag" style="background:#fee2e2;color:#991b1b;">❤️ Heart Failure</div>
+            <div class="story-location">📍 Chennai, Tamil Nadu</div>
+          </div>
+        </div>
+        <div class="story-body">
+          <div class="story-quote">"Three years ago I couldn't walk 50 steps without breathlessness. Today I walk 5 km every morning."</div>
+          <div class="story-title">From Hospital Bed to Morning Walks — Ramesh's Heart Failure Journey</div>
+          <div class="story-excerpt">After his second hospitalisation for decompensated heart failure, Ramesh was enrolled in VitaCare's HARMONY trial and started on VitaCare-HF01. Within 8 months, his ejection fraction improved from 25% to 42%...</div>
+          <a href="#" class="story-read-more">Read Full Story →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-top">
+          <div class="story-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">PM</div>
+          <div class="story-meta">
+            <div class="story-name">Priya Mehta, 34</div>
+            <div class="story-condition-tag" style="background:#dcfce7;color:#15803d;">🩸 Type 1 Diabetes</div>
+            <div class="story-location">📍 Bengaluru, Karnataka</div>
+          </div>
+        </div>
+        <div class="story-body">
+          <div class="story-quote">"Switching to GLYCOVITA® Pen changed my HbA1c from 9.2 to 6.8 in just 6 months."</div>
+          <div class="story-title">Managing Type 1 Diabetes as a Young Professional — Priya's Story</div>
+          <div class="story-excerpt">Diagnosed at 19, Priya struggled with erratic glucose levels through college and her early career. After VitaCare's PAP covered her insulin costs, she could finally afford consistent therapy...</div>
+          <a href="#" class="story-read-more">Read Full Story →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-top">
+          <div class="story-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">AS</div>
+          <div class="story-meta">
+            <div class="story-name">Anita Singh, 62</div>
+            <div class="story-condition-tag" style="background:#dbeafe;color:#1e40af;">🫁 Severe Asthma</div>
+            <div class="story-location">📍 Lucknow, Uttar Pradesh</div>
+          </div>
+        </div>
+        <div class="story-body">
+          <div class="story-quote">"I haven't had a single emergency room visit since starting BREATHEX DPI — for the first time in 12 years."</div>
+          <div class="story-title">Twelve Years of ER Visits Ended by One Medicine Change — Anita's Asthma Journey</div>
+          <div class="story-excerpt">With 4–6 acute attacks per year requiring hospitalisation, Anita's asthma was controlling her life. After proper BREATHEX DPI inhaler technique training through VitaCare's patient education program...</div>
+          <a href="#" class="story-read-more">Read Full Story →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: Block: specialist_finder | CT: specialist ║
+     ║  Fields: field_speciality (list), field_city,   ║
+     ║  field_hospital, field_doctor_name              ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="specialist-section section" data-drupal="Block: specialist_finder | CT: specialist | NEW COMPONENT">
+  <div class="container">
+    <div class="specialist-grid">
+      <div class="spec-content">
+        <div class="section-eyebrow" style="display:inline-block;margin-bottom:14px;">Block: specialist_finder</div>
+        <h2>Find a <em>VitaCare-Affiliated</em><br>Specialist Near You</h2>
+        <p>Our network includes 8,000+ specialists across India and 80 countries who are familiar with VitaCare medicines and patient support programs.</p>
+        <div class="spec-types">
+          <button class="spec-type-btn"><span class="spec-icon">❤️</span> Cardiologist</button>
+          <button class="spec-type-btn"><span class="spec-icon">🩸</span> Diabetologist</button>
+          <button class="spec-type-btn"><span class="spec-icon">🫁</span> Pulmonologist</button>
+          <button class="spec-type-btn"><span class="spec-icon">🎗️</span> Oncologist</button>
+          <button class="spec-type-btn"><span class="spec-icon">🧠</span> Neurologist</button>
+          <button class="spec-type-btn"><span class="spec-icon">🦴</span> Rheumatologist</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;background:var(--teal-lt);border-radius:12px;padding:14px 16px;margin-top:8px;">
+          <span style="font-size:22px;">📞</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.5px;">Helpline for Doctor Referral</div>
+            <div style="font-size:18px;font-weight:900;color:var(--teal-dark);">1800-VITA-DOC</div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-finder-card">
+        <h3>🔍 Locate a Specialist</h3>
+        <p>Find a VitaCare-affiliated doctor in your city</p>
+        <div class="finder-form">
+          <div class="finder-row">
+            <div class="finder-field">
+              <label>Specialty</label>
+              <select><option>Select Specialty</option><option>Cardiologist</option><option>Diabetologist</option><option>Pulmonologist</option><option>Oncologist</option><option>Neurologist</option></select>
+            </div>
+            <div class="finder-field">
+              <label>Country</label>
+              <select><option>India</option><option>United States</option><option>United Kingdom</option><option>UAE</option><option>Singapore</option></select>
+            </div>
+          </div>
+          <div class="finder-field">
+            <label>City / Pin Code</label>
+            <input type="text" placeholder="e.g. Mumbai, Delhi, 400001...">
+          </div>
+          <div class="finder-field">
+            <label>Condition (Optional)</label>
+            <select><option>Any Condition</option><option>Type 2 Diabetes</option><option>Hypertension</option><option>Heart Failure</option><option>Severe Asthma</option><option>Cancer</option></select>
+          </div>
+          <button class="btn btn-teal btn-lg" style="width:100%;justify-content:center;">Find Specialists →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  REUSED: Paragraph: services_icon_grid          ║
+     ║  CT: service_item (patient-specific services)   ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="section section-alt" data-drupal="Paragraph: services_icon_grid | CT: service_item | REUSED">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Paragraph: services_icon_grid — REUSED</div>
+      <h2 class="section-title">Complete <em>Patient Support</em> Services</h2>
+      <p class="section-desc">Every service you need to stay informed, adherent, and empowered throughout your treatment journey.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon" style="background:#dbeafe;">💊</div><h3>Medication Guidance</h3><p>Plain-language explanations of how your medicine works, when to take it, and what to expect.</p><a href="#" class="service-link">Learn More →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:var(--teal-lt);">📱</div><h3>Adherence Support</h3><p>SMS dose reminders, refill alerts, and the MyCare app to help you never miss a dose.</p><a href="#" class="service-link">Download App →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#ffe4e6;">⚠️</div><h3>Side Effect Management</h3><p>Guidance on managing common side effects and clear advice on when to seek medical help.</p><a href="#" class="service-link">Read Guide →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#dcfce7;">🥗</div><h3>Nutrition Counseling</h3><p>Disease-specific diet guides developed with registered dietitians for diabetics, cardiac patients, and more.</p><a href="#" class="service-link">Get Guide →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#f3e8ff;">🧘</div><h3>Mental Health Support</h3><p>Counseling referrals and peer support groups for patients dealing with chronic condition anxiety.</p><a href="#" class="service-link">Get Support →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#fef3c7;">🏃</div><h3>Exercise Programs</h3><p>Safe, condition-appropriate physical activity programs developed with physiotherapists.</p><a href="#" class="service-link">Start Now →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#fee2e2;">🤝</div><h3>Caregiver Training</h3><p>Practical training for family members and caregivers on medicine administration and monitoring.</p><a href="#" class="service-link">Enroll →</a></div>
+      <div class="service-card"><div class="service-icon" style="background:#e0f2fe);">🚨</div><h3>Emergency Contacts</h3><p>Quick-reference card with all important helplines, your doctor's contact, and emergency protocols.</p><a href="#" class="service-link">Download Card →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: CT: patient_resource                      ║
+     ║  View: patient_resources_library                ║
+     ║  Fields: field_resource_type (list), field_title║
+     ║  field_description, field_language_pills,       ║
+     ║  field_file_size, field_file (media)            ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="resources-section" data-drupal="CT: patient_resource | View: patient_resources_library | NEW">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0;">
+      <div>
+        <div class="section-eyebrow" style="display:inline-block;">CT: patient_resource</div>
+        <h2 class="section-title" style="text-align:left;margin-bottom:0;">Downloadable Patient <em>Resources</em></h2>
+      </div>
+      <a href="#" class="btn btn-outline">View Full Library →</a>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="rc-type-badge rct-pdf">📄 PDF</div>
+        <h4>Patient Medication Diary — Daily Tracker</h4>
+        <p>Track doses, side effects, and doctor appointments in one place.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span><span class="rc-lang-pill">Tamil</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 1.2 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-guide">📋 GUIDE</div>
+        <h4>Diabetes Self-Management — Complete Patient Guide</h4>
+        <p>Diet, exercise, monitoring, and medicine tips for Type 2 diabetics.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span><span class="rc-lang-pill">Telugu</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 4.8 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-video">🎥 VIDEO</div>
+        <h4>DPI Inhaler Technique — Step-by-Step Guide</h4>
+        <p>Animated video demonstrating correct inhaler use for BREATHEX DPI.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span></div>
+        <div class="rc-footer"><span class="rc-size">Video · 4 min</span><button class="rc-dl-btn">▶</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-infographic">📊 INFOGRAPHIC</div>
+        <h4>Know Your Blood Pressure Numbers — Quick Reference</h4>
+        <p>Easy-to-understand BP classification and action guide.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Marathi</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 0.8 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-guide">📋 GUIDE</div>
+        <h4>Heart-Healthy Diet Plan for Cardiac Patients</h4>
+        <p>Dietitian-approved meal plans and food exchange lists.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span><span class="rc-lang-pill">Bengali</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 2.1 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-pdf">📄 PDF</div>
+        <h4>Medicine Reminder Chart — Weekly Schedule Template</h4>
+        <p>Printable chart to organise multiple daily medicines by time of day.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 0.4 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-video">🎥 VIDEO</div>
+        <h4>Insulin Pen Self-Injection Technique for Beginners</h4>
+        <p>Step-by-step video for patients starting insulin therapy for the first time.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span><span class="rc-lang-pill">Tamil</span></div>
+        <div class="rc-footer"><span class="rc-size">Video · 6 min</span><button class="rc-dl-btn">▶</button></div>
+      </div>
+      <div class="resource-card">
+        <div class="rc-type-badge rct-infographic">📊 INFOGRAPHIC</div>
+        <h4>Asthma Action Plan — Traffic Light System</h4>
+        <p>Colour-coded guide for when to use rescue inhaler vs. seek emergency care.</p>
+        <div class="rc-langs"><span class="rc-lang-pill">English</span><span class="rc-lang-pill">Hindi</span></div>
+        <div class="rc-footer"><span class="rc-size">PDF · 1.1 MB</span><button class="rc-dl-btn">⬇</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: CT: educational_video                     ║
+     ║  View: video_gallery                            ║
+     ║  Paragraph: video_gallery_block                 ║
+     ║  Fields: field_video_title, field_thumbnail,    ║
+     ║  field_duration, field_video_category (tax),    ║
+     ║  field_view_count, field_video_url              ║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="video-section" data-drupal="CT: educational_video | View: video_gallery | Paragraph: video_gallery_block | NEW">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;">
+      <div>
+        <div class="section-eyebrow" style="display:inline-block;">Paragraph: video_gallery_block</div>
+        <h2 class="section-title" style="text-align:left;margin-bottom:0;">Video <em>Health Education</em></h2>
+      </div>
+      <a href="#" class="btn btn-outline">All Videos →</a>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,var(--teal-lt),#a7f3d0);">
+          <span style="font-size:52px;">🫁</span>
+          <div class="video-play"></div>
+          <span class="video-duration">4:12</span>
+          <span class="video-cat-badge" style="background:var(--teal);color:#fff;">Respiratory</span>
+        </div>
+        <div class="video-body">
+          <div class="video-meta"><span class="video-views" style="font-size:11px;color:var(--gray-400);">👁 124K views</span></div>
+          <h4>How to Use Your DPI Inhaler Correctly — Step-by-Step</h4>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#ffe4e6,#fed7aa);">
+          <span style="font-size:52px;">❤️</span>
+          <div class="video-play"></div>
+          <span class="video-duration">6:48</span>
+          <span class="video-cat-badge" style="background:#ef4444;color:#fff;">Cardiology</span>
+        </div>
+        <div class="video-body">
+          <div class="video-meta"><span class="video-views" style="font-size:11px;color:var(--gray-400);">👁 98K views</span></div>
+          <h4>Understanding Your Blood Pressure Reading — What the Numbers Mean</h4>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">
+          <span style="font-size:52px;">🩸</span>
+          <div class="video-play"></div>
+          <span class="video-duration">8:22</span>
+          <span class="video-cat-badge" style="background:var(--blue);color:#fff;">Diabetes</span>
+        </div>
+        <div class="video-body">
+          <div class="video-meta"><span class="video-views" style="font-size:11px;color:var(--gray-400);">👁 217K views</span></div>
+          <h4>Diabetes Self-Management — Diet, Exercise &amp; Monitoring Tips</h4>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);">
+          <span style="font-size:52px;">🫀</span>
+          <div class="video-play"></div>
+          <span class="video-duration">11:05</span>
+          <span class="video-cat-badge" style="background:#7c3aed;color:#fff;">Cardiology</span>
+        </div>
+        <div class="video-body">
+          <div class="video-meta"><span class="video-views" style="font-size:11px;color:var(--gray-400);">👁 73K views</span></div>
+          <h4>Living with Heart Failure — Daily Management &amp; Warning Signs</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  NEW: Paragraph: medication_safety_tips         ║
+     ║  Fields: field_heading, field_tips (multi-value)║
+     ╚══════════════════════════════════════════════════╝ -->
+<section class="safety-section" data-drupal="Paragraph: medication_safety_tips | NEW COMPONENT">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-header">
+      <div class="section-eyebrow">Paragraph: medication_safety_tips</div>
+      <h2 class="section-title">Medication Safety — <em>Know Before You Take</em></h2>
+      <p class="section-desc">Essential safety information every patient should know about their medicines.</p>
+    </div>
+    <div class="safety-grid">
+      <div class="safety-card">
+        <div class="safety-card-top">
+          <div class="safety-icon">⚠️</div>
+          <div>
+            <h3>Drug Interactions</h3>
+            <span class="safety-card-badge">HIGH PRIORITY</span>
+          </div>
+        </div>
+        <p>Some medicines interact with each other, with food, or with herbal supplements — potentially reducing effectiveness or causing harm.</p>
+        <ul class="safety-tip-list">
+          <li>Always show your doctor a complete list of ALL medicines, vitamins, and supplements you take</li>
+          <li>Avoid grapefruit juice with statins, calcium channel blockers, and certain immunosuppressants</li>
+          <li>St. John's Wort can reduce effectiveness of blood thinners, HIV medicines, and contraceptives</li>
+          <li>Alcohol can interact dangerously with blood thinners, sedatives, and metformin</li>
+        </ul>
+      </div>
+      <div class="safety-card">
+        <div class="safety-card-top">
+          <div class="safety-icon">📦</div>
+          <div>
+            <h3>Storage Instructions</h3>
+            <span class="safety-card-badge">IMPORTANT</span>
+          </div>
+        </div>
+        <p>Improper storage can reduce medicine potency or cause degradation — always follow the storage instructions on your label.</p>
+        <ul class="safety-tip-list">
+          <li>Store most tablets at room temperature (15–30°C) away from moisture and light</li>
+          <li>Refrigerate insulin (2–8°C) — never freeze; discard if frozen</li>
+          <li>Never store medicines in the bathroom — humidity degrades them</li>
+          <li>Keep all medicines out of reach of children and pets</li>
+        </ul>
+      </div>
+      <div class="safety-card">
+        <div class="safety-card-top">
+          <div class="safety-icon">🔄</div>
+          <div>
+            <h3>Missed Dose Protocol</h3>
+            <span class="safety-card-badge">ADHERENCE</span>
+          </div>
+        </div>
+        <p>Missing doses reduces medicine effectiveness and can cause rebound effects for some medicines like blood pressure drugs.</p>
+        <ul class="safety-tip-list">
+          <li>If you remember within a few hours, take the dose immediately</li>
+          <li>If it's close to your next dose, skip the missed one — never double dose</li>
+          <li>For once-weekly medicines (e.g., osteoporosis), take the missed dose as soon as you remember if the next dose is &gt;3 days away</li>
+          <li>Use our MyCare app for automated dose reminders</li>
+        </ul>
+      </div>
+      <div class="safety-card">
+        <div class="safety-card-top">
+          <div class="safety-icon">🚨</div>
+          <div>
+            <h3>Side Effect Recognition</h3>
+            <span class="safety-card-badge">EMERGENCY</span>
+          </div>
+        </div>
+        <p>Know the difference between common manageable side effects and warning signs that need immediate medical attention.</p>
+        <ul class="safety-tip-list">
+          <li>Seek emergency care for: difficulty breathing, severe allergic reaction (hives, facial swelling), chest pain, sudden confusion</li>
+          <li>Call your doctor for: persistent nausea/vomiting, unusual bleeding, jaundice (yellowing of skin/eyes), vision changes</li>
+          <li>Common effects (mild, resolve within 2 weeks): nausea, headache, mild dizziness</li>
+          <li>Report all adverse events to 1800-VITA-ADR</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REUSED: Newsletter -->
+<div class="newsletter-section" data-drupal="Paragraph: newsletter_signup | Webform: newsletter_signup | REUSED">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h2>Get Patient Health Tips Weekly</h2>
+        <p>Disease management advice, medicine updates, and wellness tips delivered to your inbox.</p>
+      </div>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Enter your email address">
+        <button class="btn btn-teal">Subscribe →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REUSED: CTA -->
+<section class="cta-vitacare" data-drupal="Paragraph: cta_banner | REUSED">
+  <div class="container">
+    <h2>Your Health, <em>Our Priority</em></h2>
+    <p>Whether you need medicine information, financial assistance, or specialist guidance — we're here for you.</p>
+    <div class="cta-grid">
+      <div class="cta-option"><div class="co-icon">📥</div><h4>Download Patient Guide</h4><p>Free disease-specific booklets in 10 languages</p></div>
+      <div class="cta-option"><div class="co-icon">👥</div><h4>Join Support Group</h4><p>Connect with 50,000+ patients like you</p></div>
+      <div class="cta-option"><div class="co-icon">🩺</div><h4>Book Nurse Consultation</h4><p>Free 30-min consultation with our clinical nurses</p></div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+      <a href="#" class="btn btn-teal btn-lg">Apply for Patient Assistance →</a>
+      <a href="#" class="btn btn-green btn-lg">Download Free Resources</a>
+      <a href="#" class="btn btn-outline btn-lg">Call 1800-VITA-007</a>
+    </div>
+  </div>
+</section>
+
+<!-- REUSED: Footer -->
+<footer class="site-footer" data-drupal="Region: footer | Block: footer_main | REUSED">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">💊</div>
+          <div><strong>VitaCare</strong><span style="display:block;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Care Beyond Cure</span></div>
+        </div>
+        <p>VitaCare Pharmaceuticals delivers evidence-based medicines and comprehensive patient support programs across 80+ countries, committed to making quality healthcare accessible to all.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn">in</a><a href="#" class="footer-social-btn">𝕏</a>
+          <a href="#" class="footer-social-btn">f</a><a href="#" class="footer-social-btn">▶</a>
+        </div>
+        <div class="footer-cert">
+          <span class="cert-badge">WHO-GMP ✓</span><span class="cert-badge">FDA ✓</span>
+          <span class="cert-badge">EMA ✓</span><span class="cert-badge">ISO 9001</span>
+        </div>
+        <div class="footer-emergency">
+          <div class="em-icon">🚨</div>
+          <div><h4>Pharmacovigilance / Adverse Event Reporting</h4><strong>1800-VITA-ADR</strong><p>Available 24 hours · 7 days</p></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Our Medicines</h5>
+        <ul><li><a href="#">Cardiovascular</a></li><li><a href="#">Respiratory</a></li><li><a href="#">Metabolic</a></li><li><a href="#">Neurology</a></li><li><a href="#">Oncology</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Patient Care</h5>
+        <ul><li><a href="pharma-theme-2-vitacare-p2.html">Assistance Program</a></li><li><a href="pharma-theme-2-vitacare-p2.html">MediHelpline</a></li><li><a href="pharma-theme-2-vitacare-p2.html">Disease Information</a></li><li><a href="pharma-theme-2-vitacare-p2.html">MyCare App</a></li><li><a href="pharma-theme-2-vitacare-p2.html">Caregiver Network</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Healthcare Providers</h5>
+        <ul><li><a href="#">HCP Portal</a></li><li><a href="#">Prescribing Info</a></li><li><a href="#">CME Programs</a></li><li><a href="#">Clinical Evidence</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul><li><a href="pharma-theme-2-vitacare.html">About VitaCare</a></li><li><a href="#">Leadership</a></li><li><a href="#">Careers</a></li><li><a href="#">Newsroom</a></li><li><a href="#">Contact Us</a></li></ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>© 2026 VitaCare Pharmaceuticals Ltd. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+        <a href="#">Cookie Policy</a><a href="#">Accessibility</a><a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    <p>The information on this website is for informational purposes only and does not constitute medical advice. Always consult a licensed healthcare professional. For adverse event reporting call 1800-VITA-ADR. VitaCare Pharmaceuticals Ltd. — committed to responsible healthcare information in compliance with applicable regulations.</p>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion toggle
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
